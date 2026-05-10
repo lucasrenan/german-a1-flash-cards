@@ -1,3 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <text y=".9em" font-size="90">🃏</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect x="6" y="10" width="52" height="44" rx="8" fill="#4f46e5"/>
+  <rect x="6" y="10" width="52" height="44" rx="8" fill="none" stroke="#3730a3" stroke-width="2"/>
+  <text x="32" y="42" font-family="ui-sans-serif, system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="26" font-weight="800" fill="#ffffff" text-anchor="middle">A1</text>
 </svg>
