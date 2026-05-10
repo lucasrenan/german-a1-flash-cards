@@ -45,7 +45,7 @@ export function SettingsModal({ settings, onSave, onClose }: Props) {
           </label>
 
           <label className="flex flex-col gap-1.5">
-            <span className="text-sm font-medium text-slate-700">Max reviews per session</span>
+            <span className="text-sm font-medium text-slate-700">Max review cards per session</span>
             <input
               type="number"
               min={1}
