@@ -28,6 +28,7 @@ export interface Settings {
   maxReviewsPerSession: number
   autoplayAudio: boolean
   showExamplesByDefault: boolean
+  audioPlaybackRate: number
 }
 
 export interface SessionStats {

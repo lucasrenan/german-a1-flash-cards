@@ -56,6 +56,21 @@ export function SettingsModal({ settings, onSave, onClose }: Props) {
             />
           </label>
 
+          <label className="flex flex-col gap-1.5">
+            <span className="text-sm font-medium text-slate-700">Audio playback speed</span>
+            <select
+              value={form.audioPlaybackRate}
+              onChange={(e) => setForm((f) => ({ ...f, audioPlaybackRate: Number(e.target.value) }))}
+              className="border border-slate-300 rounded-lg px-3 py-2 text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            >
+              <option value={0.5}>0.5× (very slow)</option>
+              <option value={0.75}>0.75× (slow)</option>
+              <option value={0.85}>0.85× (slightly slow)</option>
+              <option value={1}>1× (normal)</option>
+              <option value={1.25}>1.25× (fast)</option>
+            </select>
+          </label>
+
           <label className="flex items-center justify-between py-1">
             <span className="text-sm font-medium text-slate-700">Autoplay audio</span>
             <button

@@ -8,6 +8,7 @@ export const DEFAULT_SETTINGS: Settings = {
   maxReviewsPerSession: 100,
   autoplayAudio: false,
   showExamplesByDefault: true,
+  audioPlaybackRate: 0.85,
 }
 
 export function loadCardStates(): Record<string, CardState> {

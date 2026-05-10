@@ -6,10 +6,18 @@ interface Props {
   isRevealed: boolean
   autoplayAudio: boolean
   showExamplesByDefault: boolean
+  audioPlaybackRate: number
   onReveal: () => void
 }
 
-export function FlashCard({ card, isRevealed, autoplayAudio, showExamplesByDefault, onReveal }: Props) {
+export function FlashCard({
+  card,
+  isRevealed,
+  autoplayAudio,
+  showExamplesByDefault,
+  audioPlaybackRate,
+  onReveal,
+}: Props) {
   const [showDeSentence, setShowDeSentence] = useState(showExamplesByDefault)
   const [showEnSentence, setShowEnSentence] = useState(showExamplesByDefault)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -34,6 +42,7 @@ export function FlashCard({ card, isRevealed, autoplayAudio, showExamplesByDefau
       audioRef.current.currentTime = 0
     }
     const audio = new Audio(card.audioUrl)
+    audio.playbackRate = audioPlaybackRate
     audioRef.current = audio
     audio.onplay = () => setIsPlaying(true)
     audio.onended = () => setIsPlaying(false)
