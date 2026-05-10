@@ -3,6 +3,7 @@ import { HomeScreen } from './components/HomeScreen'
 import { SessionComplete } from './components/SessionComplete'
 import { SessionScreen } from './components/SessionScreen'
 import { SettingsModal } from './components/SettingsModal'
+import { WordsScreen } from './components/WordsScreen'
 import { loadDeck } from './lib/deck'
 import { buildQueue } from './lib/session'
 import { createInitialState, isDue, reviewCard } from './lib/sm2'
@@ -23,7 +24,7 @@ import type {
   Settings,
 } from './types'
 
-type View = 'loading' | 'error' | 'home' | 'session' | 'complete'
+type View = 'loading' | 'error' | 'home' | 'session' | 'complete' | 'words'
 
 const EMPTY_STATS: SessionStats = { total: 0, again: 0, hard: 0, good: 0, easy: 0 }
 
@@ -160,6 +161,15 @@ export default function App() {
             onFilterChange={setFilter}
             onStart={handleStart}
             onOpenSettings={() => setShowSettings(true)}
+            onBrowseWords={() => setView('words')}
+          />
+        )}
+
+        {view === 'words' && (
+          <WordsScreen
+            cards={cards}
+            cardStates={cardStates}
+            onBack={() => setView('home')}
           />
         )}
 

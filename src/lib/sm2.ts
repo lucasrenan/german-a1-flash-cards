@@ -41,6 +41,7 @@ export function reviewCard(state: CardState, rating: Rating): CardState {
         dueDate: addDays(t, 1).toISOString(),
         status: 'learning',
         lapses: state.lapses + 1,
+        lastRating: rating,
       }
 
     case 'hard': {
@@ -51,6 +52,7 @@ export function reviewCard(state: CardState, rating: Rating): CardState {
         easeFactor: Math.max(1.3, state.easeFactor - 0.15),
         dueDate: addDays(t, interval).toISOString(),
         status: state.repetitions >= 2 ? 'review' : 'learning',
+        lastRating: rating,
       }
     }
 
@@ -66,6 +68,7 @@ export function reviewCard(state: CardState, rating: Rating): CardState {
         interval,
         dueDate: addDays(t, interval).toISOString(),
         status: 'review',
+        lastRating: rating,
       }
     }
 
@@ -82,6 +85,7 @@ export function reviewCard(state: CardState, rating: Rating): CardState {
         easeFactor: Math.min(3.5, state.easeFactor + 0.15),
         dueDate: addDays(t, interval).toISOString(),
         status: 'review',
+        lastRating: rating,
       }
     }
   }

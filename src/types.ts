@@ -16,6 +16,7 @@ export interface CardState {
   dueDate: string
   status: 'new' | 'learning' | 'review'
   lapses: number
+  lastRating?: Rating
 }
 
 export type Rating = 'again' | 'hard' | 'good' | 'easy'
