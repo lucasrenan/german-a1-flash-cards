@@ -5,21 +5,22 @@ interface Props {
   card: Card
   isRevealed: boolean
   autoplayAudio: boolean
+  showExamplesByDefault: boolean
   onReveal: () => void
 }
 
-export function FlashCard({ card, isRevealed, autoplayAudio, onReveal }: Props) {
-  const [showDeSentence, setShowDeSentence] = useState(false)
-  const [showEnSentence, setShowEnSentence] = useState(false)
+export function FlashCard({ card, isRevealed, autoplayAudio, showExamplesByDefault, onReveal }: Props) {
+  const [showDeSentence, setShowDeSentence] = useState(showExamplesByDefault)
+  const [showEnSentence, setShowEnSentence] = useState(showExamplesByDefault)
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
-    setShowDeSentence(false)
-    setShowEnSentence(false)
+    setShowDeSentence(showExamplesByDefault)
+    setShowEnSentence(showExamplesByDefault)
     setIsPlaying(false)
     audioRef.current = null
-  }, [card.id])
+  }, [card.id, showExamplesByDefault])
 
   useEffect(() => {
     if (autoplayAudio) {

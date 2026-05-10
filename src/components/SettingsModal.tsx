@@ -75,6 +75,25 @@ export function SettingsModal({ settings, onSave, onClose }: Props) {
             </button>
           </label>
 
+          <label className="flex items-center justify-between py-1">
+            <span className="text-sm font-medium text-slate-700">Show examples by default</span>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={form.showExamplesByDefault}
+              onClick={() => setForm((f) => ({ ...f, showExamplesByDefault: !f.showExamplesByDefault }))}
+              className={`relative w-11 h-6 rounded-full transition-colors ${
+                form.showExamplesByDefault ? 'bg-indigo-600' : 'bg-slate-300'
+              }`}
+            >
+              <span
+                className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
+                  form.showExamplesByDefault ? 'translate-x-5' : ''
+                }`}
+              />
+            </button>
+          </label>
+
           <button
             type="submit"
             className="w-full py-3 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 active:bg-indigo-800 transition-colors"

@@ -62,6 +62,7 @@ export function SessionScreen({ queue, cardMap, settings, onRate, onExit, stats 
         card={card}
         isRevealed={isRevealed}
         autoplayAudio={settings.autoplayAudio}
+        showExamplesByDefault={settings.showExamplesByDefault}
         onReveal={() => setIsRevealed(true)}
       />
 

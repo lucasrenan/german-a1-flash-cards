@@ -7,6 +7,7 @@ export const DEFAULT_SETTINGS: Settings = {
   newCardsPerSession: 20,
   maxReviewsPerSession: 100,
   autoplayAudio: false,
+  showExamplesByDefault: true,
 }
 
 export function loadCardStates(): Record<string, CardState> {

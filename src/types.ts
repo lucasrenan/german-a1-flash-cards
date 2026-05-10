@@ -27,6 +27,7 @@ export interface Settings {
   newCardsPerSession: number
   maxReviewsPerSession: number
   autoplayAudio: boolean
+  showExamplesByDefault: boolean
 }
 
 export interface SessionStats {
