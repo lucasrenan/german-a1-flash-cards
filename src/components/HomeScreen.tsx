@@ -44,7 +44,7 @@ export function HomeScreen({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-800">A1 Flash Cards</h1>
-          <p className="text-sm text-slate-500 mt-0.5">German vocabulary</p>
+          <p className="text-sm text-slate-500 mt-0.5">German vocabulary 🇩🇪</p>
         </div>
         <button
           onClick={onOpenSettings}
