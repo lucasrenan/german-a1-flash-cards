@@ -8,12 +8,12 @@ import { loadDeck } from './lib/deck'
 import { buildQueue } from './lib/session'
 import { createInitialState, isDue, reviewCard } from './lib/sm2'
 import {
-  DEFAULT_SETTINGS,
   loadCardStates,
   loadSettings,
   saveCardStates,
   saveSettings,
 } from './lib/storage'
+import { applyTheme, watchSystemTheme } from './lib/theme'
 import type {
   Card,
   CardState,
@@ -22,6 +22,7 @@ import type {
   Rating,
   SessionStats,
   Settings,
+  ThemePreference,
 } from './types'
 
 type View = 'loading' | 'error' | 'home' | 'session' | 'complete' | 'words'
@@ -32,8 +33,8 @@ export default function App() {
   const [view, setView] = useState<View>('loading')
   const [error, setError] = useState<string | null>(null)
   const [cards, setCards] = useState<Card[]>([])
-  const [cardStates, setCardStates] = useState<Record<string, CardState>>({})
-  const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS)
+  const [cardStates, setCardStates] = useState<Record<string, CardState>>(() => loadCardStates())
+  const [settings, setSettings] = useState<Settings>(() => loadSettings())
   const [filter, setFilter] = useState<FilterMode>('all')
   const [showSettings, setShowSettings] = useState(false)
   const [queue, setQueue] = useState<string[]>([])
@@ -43,10 +44,21 @@ export default function App() {
   const cardStatesRef = useRef(cardStates)
   cardStatesRef.current = cardStates
 
-  useEffect(() => {
-    setSettings(loadSettings())
-    setCardStates(loadCardStates())
+  const settingsRef = useRef(settings)
+  settingsRef.current = settings
 
+  useEffect(() => {
+    applyTheme(settings.theme)
+  }, [settings.theme])
+
+  useEffect(() => {
+    return watchSystemTheme(
+      () => settingsRef.current.theme,
+      () => applyTheme(settingsRef.current.theme),
+    )
+  }, [])
+
+  useEffect(() => {
     loadDeck()
       .then((deck) => {
         setCards(deck)
@@ -126,11 +138,17 @@ export default function App() {
     saveSettings(s)
   }
 
+  function handleThemeChange(theme: ThemePreference) {
+    const next = { ...settingsRef.current, theme }
+    setSettings(next)
+    saveSettings(next)
+  }
+
   if (view === 'loading') {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4 text-slate-500">
-          <div className="w-8 h-8 border-2 border-indigo-300 border-t-indigo-600 rounded-full animate-spin" />
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4 text-slate-500 dark:text-slate-400">
+          <div className="w-8 h-8 border-2 border-indigo-300 dark:border-indigo-800 border-t-indigo-600 dark:border-t-indigo-400 rounded-full animate-spin" />
           <p className="text-sm">Loading deck…</p>
         </div>
       </div>
@@ -139,19 +157,19 @@ export default function App() {
 
   if (view === 'error') {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl border border-red-200 p-6 max-w-sm w-full text-center shadow-sm">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-red-200 dark:border-red-900 p-6 max-w-sm w-full text-center shadow-sm">
           <p className="text-4xl mb-3">⚠️</p>
-          <h2 className="text-lg font-semibold text-slate-800 mb-1">Couldn't load deck</h2>
-          <p className="text-sm text-slate-500 mb-4">{error}</p>
-          <p className="text-xs text-slate-400">Make sure you have an internet connection, then reload the page.</p>
+          <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-1">Couldn't load deck</h2>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">{error}</p>
+          <p className="text-xs text-slate-400 dark:text-slate-500">Make sure you have an internet connection, then reload the page.</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       <div className="max-w-lg mx-auto px-4 pb-8">
         {view === 'home' && (
           <HomeScreen
@@ -197,6 +215,7 @@ export default function App() {
         <SettingsModal
           settings={settings}
           onSave={handleSaveSettings}
+          onThemeChange={handleThemeChange}
           onClose={() => setShowSettings(false)}
         />
       )}

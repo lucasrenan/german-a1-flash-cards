@@ -9,6 +9,7 @@ export const DEFAULT_SETTINGS: Settings = {
   autoplayAudio: false,
   showExamplesByDefault: true,
   audioPlaybackRate: 0.85,
+  theme: 'system',
 }
 
 export function loadCardStates(): Record<string, CardState> {

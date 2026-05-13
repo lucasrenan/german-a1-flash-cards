@@ -23,12 +23,15 @@ export type Rating = 'again' | 'hard' | 'good' | 'easy'
 
 export type FilterMode = 'all' | 'new' | 'due' | 'learning'
 
+export type ThemePreference = 'system' | 'light' | 'dark'
+
 export interface Settings {
   newCardsPerSession: number
   maxReviewsPerSession: number
   autoplayAudio: boolean
   showExamplesByDefault: boolean
   audioPlaybackRate: number
+  theme: ThemePreference
 }
 
 export interface SessionStats {

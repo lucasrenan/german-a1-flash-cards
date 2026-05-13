@@ -20,16 +20,16 @@ const FILTERS: { mode: StatusFilter; label: string }[] = [
 ]
 
 const STATUS_STYLES: Record<CardState['status'], string> = {
-  new: 'bg-slate-100 text-slate-600',
-  learning: 'bg-orange-100 text-orange-700',
-  review: 'bg-green-100 text-green-700',
+  new: 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300',
+  learning: 'bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300',
+  review: 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300',
 }
 
 const RATING_STYLES: Record<Rating, string> = {
-  again: 'bg-red-100 text-red-700',
-  hard: 'bg-orange-100 text-orange-700',
-  good: 'bg-green-100 text-green-700',
-  easy: 'bg-blue-100 text-blue-700',
+  again: 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300',
+  hard: 'bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300',
+  good: 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300',
+  easy: 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300',
 }
 
 const RATING_LABELS: Record<Rating, string> = {
@@ -69,15 +69,15 @@ export function WordsScreen({ cards, cardStates, onBack }: Props) {
         <button
           onClick={onBack}
           aria-label="Back"
-          className="w-10 h-10 flex items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 active:bg-slate-200"
+          className="w-10 h-10 flex items-center justify-center rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 active:bg-slate-200 dark:active:bg-slate-700"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
         <div className="flex-1">
-          <h1 className="text-xl font-bold text-slate-800">Words</h1>
-          <p className="text-xs text-slate-500">{filtered.length} cards</p>
+          <h1 className="text-xl font-bold text-slate-800 dark:text-slate-100">Words</h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400">{filtered.length} cards</p>
         </div>
       </div>
 
@@ -92,7 +92,7 @@ export function WordsScreen({ cards, cardStates, onBack }: Props) {
               className={`px-4 py-1.5 rounded-full text-sm font-medium border whitespace-nowrap transition-colors ${
                 isActive
                   ? 'bg-indigo-600 text-white border-indigo-600'
-                  : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                  : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
               }`}
             >
               {label}
@@ -103,14 +103,14 @@ export function WordsScreen({ cards, cardStates, onBack }: Props) {
 
       {/* List */}
       {pageItems.length === 0 ? (
-        <div className="text-center py-12 text-slate-400 text-sm">No cards in this filter</div>
+        <div className="text-center py-12 text-slate-400 dark:text-slate-500 text-sm">No cards in this filter</div>
       ) : (
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm divide-y divide-slate-100 overflow-hidden">
+        <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden">
           {pageItems.map(({ card, state }) => (
             <div key={card.id} className="flex items-center gap-3 p-3">
               <div className="flex-1 min-w-0">
-                <p className="font-medium text-slate-800 truncate">{card.deWord}</p>
-                <p className="text-sm text-slate-500 truncate">{card.enWord}</p>
+                <p className="font-medium text-slate-800 dark:text-slate-100 truncate">{card.deWord}</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400 truncate">{card.enWord}</p>
               </div>
               <div className="flex flex-col items-end gap-1 flex-shrink-0">
                 <span
@@ -137,17 +137,17 @@ export function WordsScreen({ cards, cardStates, onBack }: Props) {
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={safePage <= 1}
-            className="px-4 py-2 rounded-lg bg-white border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="px-4 py-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             ← Prev
           </button>
-          <span className="text-sm text-slate-500">
+          <span className="text-sm text-slate-500 dark:text-slate-400">
             Page {safePage} of {totalPages}
           </span>
           <button
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={safePage >= totalPages}
-            className="px-4 py-2 rounded-lg bg-white border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="px-4 py-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Next →
           </button>

@@ -35,7 +35,7 @@ export function SessionScreen({ queue, cardMap, settings, onRate, onExit, stats 
       <div className="flex items-center gap-3">
         <button
           onClick={onExit}
-          className="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 flex-shrink-0"
+          className="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 flex-shrink-0"
           aria-label="End session"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -44,11 +44,11 @@ export function SessionScreen({ queue, cardMap, settings, onRate, onExit, stats 
         </button>
 
         <div className="flex-1">
-          <div className="flex justify-between text-xs text-slate-400 mb-1">
+          <div className="flex justify-between text-xs text-slate-400 dark:text-slate-500 mb-1">
             <span>{done} done</span>
             <span>{queue.length} left</span>
           </div>
-          <div className="h-1.5 bg-slate-200 rounded-full overflow-hidden">
+          <div className="h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
             <div
               className="h-full bg-indigo-500 rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}

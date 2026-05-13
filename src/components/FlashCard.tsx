@@ -53,19 +53,19 @@ export function FlashCard({
   return (
     <div className="flex flex-col gap-4 w-full">
       {/* Front: German */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2">German</p>
-            <p className="text-2xl font-semibold text-slate-800 leading-tight break-words">{card.deWord}</p>
+            <p className="text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">German</p>
+            <p className="text-2xl font-semibold text-slate-800 dark:text-slate-100 leading-tight break-words">{card.deWord}</p>
           </div>
           <button
             onClick={playAudio}
             aria-label="Play pronunciation"
             className={`flex-shrink-0 w-11 h-11 rounded-full flex items-center justify-center transition-colors ${
               isPlaying
-                ? 'bg-indigo-100 text-indigo-600'
-                : 'bg-slate-100 text-slate-500 hover:bg-slate-200 active:bg-slate-300'
+                ? 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300'
+                : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 active:bg-slate-300 dark:active:bg-slate-500'
             }`}
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -79,10 +79,10 @@ export function FlashCard({
         </div>
 
         {card.deSentence && (
-          <div className="mt-4 pt-4 border-t border-slate-100">
+          <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700">
             <button
               onClick={() => setShowDeSentence((v) => !v)}
-              className="text-sm text-indigo-500 hover:text-indigo-700 font-medium flex items-center gap-1"
+              className="text-sm text-indigo-500 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium flex items-center gap-1"
             >
               <svg
                 className={`w-4 h-4 transition-transform ${showDeSentence ? 'rotate-90' : ''}`}
@@ -95,7 +95,7 @@ export function FlashCard({
               {showDeSentence ? 'Hide example' : 'Show example'}
             </button>
             {showDeSentence && (
-              <p className="mt-2 text-slate-600 italic text-sm leading-relaxed">{card.deSentence}</p>
+              <p className="mt-2 text-slate-600 dark:text-slate-300 italic text-sm leading-relaxed">{card.deSentence}</p>
             )}
           </div>
         )}
@@ -110,21 +110,21 @@ export function FlashCard({
           Show Answer
         </button>
       ) : (
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 animate-fade-in">
-          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2">English</p>
-          <p className="text-2xl font-semibold text-slate-800 leading-tight break-words">{card.enWord}</p>
+        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 animate-fade-in">
+          <p className="text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">English</p>
+          <p className="text-2xl font-semibold text-slate-800 dark:text-slate-100 leading-tight break-words">{card.enWord}</p>
 
           {card.enNote && (
-            <span className="mt-2 inline-block text-xs font-medium px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">
+            <span className="mt-2 inline-block text-xs font-medium px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300">
               {card.enNote}
             </span>
           )}
 
           {card.enSentence && (
-            <div className="mt-4 pt-4 border-t border-slate-100">
+            <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700">
               <button
                 onClick={() => setShowEnSentence((v) => !v)}
-                className="text-sm text-indigo-500 hover:text-indigo-700 font-medium flex items-center gap-1"
+                className="text-sm text-indigo-500 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium flex items-center gap-1"
               >
                 <svg
                   className={`w-4 h-4 transition-transform ${showEnSentence ? 'rotate-90' : ''}`}
@@ -137,7 +137,7 @@ export function FlashCard({
                 {showEnSentence ? 'Hide example' : 'Show example'}
               </button>
               {showEnSentence && (
-                <p className="mt-2 text-slate-600 italic text-sm leading-relaxed">{card.enSentence}</p>
+                <p className="mt-2 text-slate-600 dark:text-slate-300 italic text-sm leading-relaxed">{card.enSentence}</p>
               )}
             </div>
           )}

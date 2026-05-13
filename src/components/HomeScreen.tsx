@@ -43,13 +43,13 @@ export function HomeScreen({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">A1 Flash Cards</h1>
-          <p className="text-sm text-slate-500 mt-0.5">German vocabulary 🇩🇪</p>
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">A1 Flash Cards</h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">German vocabulary 🇩🇪</p>
         </div>
         <button
           onClick={onOpenSettings}
           aria-label="Settings"
-          className="w-10 h-10 flex items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 active:bg-slate-200 transition-colors"
+          className="w-10 h-10 flex items-center justify-center rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 active:bg-slate-200 dark:active:bg-slate-700 transition-colors"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -66,20 +66,20 @@ export function HomeScreen({
       {/* Stats strip */}
       <div className="grid grid-cols-3 gap-3">
         {[
-          { label: 'New', value: summary.newCount, color: 'text-indigo-600' },
-          { label: 'Due', value: summary.dueCount, color: 'text-orange-500' },
-          { label: 'Learning', value: summary.learningCount, color: 'text-green-600' },
+          { label: 'New', value: summary.newCount, color: 'text-indigo-600 dark:text-indigo-400' },
+          { label: 'Due', value: summary.dueCount, color: 'text-orange-500 dark:text-orange-400' },
+          { label: 'Learning', value: summary.learningCount, color: 'text-green-600 dark:text-green-400' },
         ].map(({ label, value, color }) => (
-          <div key={label} className="bg-white rounded-xl border border-slate-200 p-3 text-center shadow-sm">
+          <div key={label} className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-3 text-center shadow-sm">
             <p className={`text-xl font-bold ${color}`}>{value}</p>
-            <p className="text-xs text-slate-500 mt-0.5">{label}</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{label}</p>
           </div>
         ))}
       </div>
 
       {/* Filter tabs */}
       <div>
-        <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2">Study</p>
+        <p className="text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Study</p>
         <div className="grid grid-cols-4 gap-2">
           {FILTERS.map(({ mode, label, key }) => {
             const count = key ? summary[key] : null
@@ -91,12 +91,12 @@ export function HomeScreen({
                 className={`flex flex-col items-center py-2.5 px-1 rounded-xl border text-sm font-medium transition-colors ${
                   isActive
                     ? 'bg-indigo-600 text-white border-indigo-600'
-                    : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                    : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
                 }`}
               >
                 <span>{label}</span>
                 {count !== null && (
-                  <span className={`text-xs mt-0.5 ${isActive ? 'text-indigo-200' : 'text-slate-400'}`}>{count}</span>
+                  <span className={`text-xs mt-0.5 ${isActive ? 'text-indigo-200' : 'text-slate-400 dark:text-slate-500'}`}>{count}</span>
                 )}
               </button>
             )
@@ -111,7 +111,7 @@ export function HomeScreen({
         className={`w-full py-4 rounded-2xl font-semibold text-base shadow-sm transition-colors ${
           canStart
             ? 'bg-indigo-600 text-white hover:bg-indigo-700 active:bg-indigo-800'
-            : 'bg-slate-100 text-slate-400 cursor-not-allowed'
+            : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed'
         }`}
       >
         {canStart ? `Start Session · ${sessionSize} cards` : 'Nothing to study'}
@@ -119,7 +119,7 @@ export function HomeScreen({
 
       <button
         onClick={onBrowseWords}
-        className="w-full py-3 rounded-2xl bg-white border border-slate-200 text-slate-700 font-medium text-sm hover:bg-slate-50 active:bg-slate-100 transition-colors flex items-center justify-center gap-2"
+        className="w-full py-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 active:bg-slate-100 dark:active:bg-slate-600 transition-colors flex items-center justify-center gap-2"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -132,7 +132,7 @@ export function HomeScreen({
         Browse all words
       </button>
 
-      <p className="text-center text-xs text-slate-400">{summary.total} cards total in deck</p>
+      <p className="text-center text-xs text-slate-400 dark:text-slate-500">{summary.total} cards total in deck</p>
     </div>
   )
 }
