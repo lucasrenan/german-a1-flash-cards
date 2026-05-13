@@ -81,7 +81,7 @@ To reset all progress, clear your browser's localStorage for the site.
 
 ## Credits
 
-- **Vocabulary list**: [Anki German A1 Vocab](https://github.com/patsytau/anki_german_a1_vocab) by **patsytau** — based on the Goethe-Institut A1 wordlist.
+- **Vocabulary list**: [Anki German A1 Vocab](https://github.com/patsytau/anki_german_a1_vocab) by **patsytau** — based on the Goethe-Institut A1 wordlist (GOETHE-ZERTIFIKAT A1 - START DEUTSCH 1 - WORTLISTE).
 - **Audio**: machine-generated using [Thorsten-Voice](https://github.com/thorstenMueller/Thorsten-Voice) by **Thorsten Müller** — a high-quality, free, offline German TTS voice.
 
 Huge thanks to both authors for making these resources freely available.
