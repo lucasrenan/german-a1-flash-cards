@@ -4,8 +4,8 @@ const CARD_STATES_KEY = 'a1fc_card_states'
 const SETTINGS_KEY = 'a1fc_settings'
 
 export const DEFAULT_SETTINGS: Settings = {
-  newCardsPerSession: 20,
-  maxReviewsPerSession: 100,
+  newCardsPerSession: 10,
+  maxReviewsPerSession: 1,
   autoplayAudio: false,
   showExamplesByDefault: true,
   audioPlaybackRate: 0.85,
