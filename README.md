@@ -36,6 +36,14 @@ No backend. No tracking. Everything runs in the browser.
 - Node.js 20+ (tested with Node 22)
 - npm
 
+The repo includes an [`.nvmrc`](./.nvmrc) pinning Node 22. If you use [nvm](https://github.com/nvm-sh/nvm):
+
+```bash
+nvm use          # picks up the version from .nvmrc
+# or, if you don't have it installed yet:
+nvm install
+```
+
 ### Install
 
 ```bash
@@ -69,6 +77,17 @@ The static site is output to `dist/`. You can deploy it to any static host (Verc
 ```bash
 npm run preview
 ```
+
+### Run the tests
+
+Unit tests cover the SM-2 algorithm, session queue, deck parser, storage, theme handling, and verb data integrity. They run with [Vitest](https://vitest.dev/) in a jsdom environment.
+
+```bash
+npm test          # watch mode
+npm run test:run  # one-shot (CI)
+```
+
+Test files live next to the code they cover, as `*.test.ts`.
 
 ## How It Works
 
