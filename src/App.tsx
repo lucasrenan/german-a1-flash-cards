@@ -3,6 +3,7 @@ import { HomeScreen } from './components/HomeScreen'
 import { SessionComplete } from './components/SessionComplete'
 import { SessionScreen } from './components/SessionScreen'
 import { SettingsModal } from './components/SettingsModal'
+import { VerbsScreen } from './components/VerbsScreen'
 import { WordsScreen } from './components/WordsScreen'
 import { loadDeck } from './lib/deck'
 import { buildQueue } from './lib/session'
@@ -25,9 +26,18 @@ import type {
   ThemePreference,
 } from './types'
 
-type View = 'loading' | 'error' | 'home' | 'session' | 'complete' | 'words'
+type View = 'loading' | 'error' | 'home' | 'session' | 'complete' | 'words' | 'verbs'
 
 const EMPTY_STATS: SessionStats = { total: 0, again: 0, hard: 0, good: 0, easy: 0 }
+
+// Only `/verbs` has a dedicated URL; every other in-app view shares `/`.
+function pathToInitialView(path: string): 'home' | 'verbs' {
+  return path.replace(/\/$/, '') === '/verbs' ? 'verbs' : 'home'
+}
+
+function viewToPath(v: View): string {
+  return v === 'verbs' ? '/verbs' : '/'
+}
 
 export default function App() {
   const [view, setView] = useState<View>('loading')
@@ -62,13 +72,35 @@ export default function App() {
     loadDeck()
       .then((deck) => {
         setCards(deck)
-        setView('home')
+        setView(pathToInitialView(window.location.pathname))
       })
       .catch((err: unknown) => {
         setError(err instanceof Error ? err.message : 'Failed to load deck')
         setView('error')
       })
   }, [])
+
+  useEffect(() => {
+    function onPop() {
+      const target = pathToInitialView(window.location.pathname)
+      setView((current) => {
+        // Only swap between home/verbs on back/forward; leave mid-session views alone.
+        if (current === 'verbs' && target === 'home') return 'home'
+        if (current === 'home' && target === 'verbs') return 'verbs'
+        return current
+      })
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
+
+  function navigate(target: View) {
+    const nextPath = viewToPath(target)
+    if (window.location.pathname !== nextPath) {
+      window.history.pushState({}, '', nextPath)
+    }
+    setView(target)
+  }
 
   const cardMap = useMemo(() => new Map(cards.map((c) => [c.id, c])), [cards])
 
@@ -180,6 +212,7 @@ export default function App() {
             onStart={handleStart}
             onOpenSettings={() => setShowSettings(true)}
             onBrowseWords={() => setView('words')}
+            onBrowseVerbs={() => navigate('verbs')}
           />
         )}
 
@@ -190,6 +223,8 @@ export default function App() {
             onBack={() => setView('home')}
           />
         )}
+
+        {view === 'verbs' && <VerbsScreen onBack={() => navigate('home')} />}
 
         {view === 'session' && (
           <SessionScreen

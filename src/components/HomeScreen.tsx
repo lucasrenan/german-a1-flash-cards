@@ -8,6 +8,7 @@ interface Props {
   onStart: () => void
   onOpenSettings: () => void
   onBrowseWords: () => void
+  onBrowseVerbs: () => void
 }
 
 const FILTERS: { mode: FilterMode; label: string; key: keyof DeckSummary | null }[] = [
@@ -25,6 +26,7 @@ export function HomeScreen({
   onStart,
   onOpenSettings,
   onBrowseWords,
+  onBrowseVerbs,
 }: Props) {
   const sessionSize =
     filter === 'new'
@@ -117,20 +119,37 @@ export function HomeScreen({
         {canStart ? `Start Session · ${sessionSize} cards` : 'Nothing to study'}
       </button>
 
-      <button
-        onClick={onBrowseWords}
-        className="w-full py-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 active:bg-slate-100 dark:active:bg-slate-600 transition-colors flex items-center justify-center gap-2"
-      >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 6h16M4 10h16M4 14h16M4 18h16"
-          />
-        </svg>
-        Browse all words
-      </button>
+      <div className="grid grid-cols-2 gap-2">
+        <button
+          onClick={onBrowseWords}
+          className="py-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 active:bg-slate-100 dark:active:bg-slate-600 transition-colors flex items-center justify-center gap-2"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 10h16M4 14h16M4 18h16"
+            />
+          </svg>
+          Browse words
+        </button>
+
+        <button
+          onClick={onBrowseVerbs}
+          className="py-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 active:bg-slate-100 dark:active:bg-slate-600 transition-colors flex items-center justify-center gap-2"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+            />
+          </svg>
+          Verbs reference
+        </button>
+      </div>
 
       <p className="text-center text-xs text-slate-400 dark:text-slate-500">{summary.total} cards total in deck</p>
     </div>
