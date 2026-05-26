@@ -104,50 +104,72 @@ export function VerbsScreen({ onBack }: Props) {
 }
 
 function VerbCard({ verb }: { verb: Verb }) {
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
-    <article className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm p-4 flex flex-col gap-3">
-      {/* Title row */}
-      <header className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
+    <article className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col overflow-hidden">
+      {/* Title row — clickable toggle */}
+      <button
+        type="button"
+        onClick={() => setIsOpen((v) => !v)}
+        aria-expanded={isOpen}
+        className="flex items-start justify-between gap-3 p-4 text-left hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
+      >
+        <div className="min-w-0 flex-1">
           <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100 leading-tight">
             {verb.infinitive}
           </h2>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">{verb.english}</p>
         </div>
-        <span
-          className={`text-xs font-medium px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0 ${CATEGORY_STYLES[verb.category]}`}
-        >
-          {CATEGORY_LABELS[verb.category]}
-        </span>
-      </header>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <span
+            className={`text-xs font-medium px-2 py-0.5 rounded-full whitespace-nowrap ${CATEGORY_STYLES[verb.category]}`}
+          >
+            {CATEGORY_LABELS[verb.category]}
+          </span>
+          <svg
+            className={`w-4 h-4 text-slate-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </button>
 
-      {/* Conjugation table — subtle divider after er/sie/es separates singular from plural */}
-      <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-sm">
-        {PRONOUN_LABELS.map(({ key, label }, idx) => {
-          const divider =
-            idx === 3 ? 'pt-2 mt-1 border-t border-slate-100 dark:border-slate-700' : ''
-          return (
-            <Fragment key={key}>
-              <dt className={`text-slate-500 dark:text-slate-400 font-medium ${divider}`}>
-                {label}
-              </dt>
-              <dd className={`text-slate-800 dark:text-slate-100 font-mono ${divider}`}>
-                {verb.conjugation[key]}
-              </dd>
-            </Fragment>
-          )
-        })}
-      </dl>
+      {isOpen && (
+        <div className="px-4 pb-4 flex flex-col gap-3">
+          {/* Conjugation table — subtle divider after er/sie/es separates singular from plural */}
+          <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-sm">
+            {PRONOUN_LABELS.map(({ key, label }, idx) => {
+              const divider =
+                idx === 3 ? 'pt-2 mt-1 border-t border-slate-100 dark:border-slate-700' : ''
+              return (
+                <Fragment key={key}>
+                  <dt className={`text-slate-500 dark:text-slate-400 font-medium ${divider}`}>
+                    {label}
+                  </dt>
+                  <dd className={`text-slate-800 dark:text-slate-100 font-mono ${divider}`}>
+                    {verb.conjugation[key]}
+                  </dd>
+                </Fragment>
+              )
+            })}
+          </dl>
 
-      {/* Example */}
-      <div className="pt-3 border-t border-slate-100 dark:border-slate-700">
-        <p className="text-sm text-slate-800 dark:text-slate-100 italic">
-          “{verb.example.de}”
-        </p>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-          {verb.example.en}
-        </p>
-      </div>
+          {/* Example */}
+          <div className="pt-3 border-t border-slate-100 dark:border-slate-700">
+            <p className="text-sm text-slate-800 dark:text-slate-100 italic">
+              “{verb.example.de}”
+            </p>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              {verb.example.en}
+            </p>
+          </div>
+        </div>
+      )}
     </article>
   )
 }
