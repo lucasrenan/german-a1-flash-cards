@@ -82,6 +82,13 @@ export const verbs: Verb[] = [
     conjugation: { ich: 'soll', du: 'sollst', erSieEs: 'soll', wir: 'sollen', ihr: 'sollt', Sie: 'sollen' },
     example: { de: 'Du sollst um 9 Uhr da sein.', en: 'You are supposed to be there at 9.' },
   },
+  {
+    infinitive: 'mögen',
+    english: 'to like',
+    category: 'modal',
+    conjugation: { ich: 'mag', du: 'magst', erSieEs: 'mag', wir: 'mögen', ihr: 'mögt', Sie: 'mögen' },
+    example: { de: 'Ich mag Schokolade.', en: 'I like chocolate.' },
+  },
 
   // — Irregular —
   {
