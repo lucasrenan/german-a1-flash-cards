@@ -40,11 +40,18 @@ const PRONOUN_LABELS: { key: keyof Verb['conjugation']; label: string }[] = [
 
 export function VerbsScreen({ onBack }: Props) {
   const [filter, setFilter] = useState<CategoryFilter>('all')
+  const [query, setQuery] = useState('')
 
-  const filtered = useMemo(
-    () => (filter === 'all' ? verbs : verbs.filter((v) => v.category === filter)),
-    [filter],
-  )
+  const filtered = useMemo(() => {
+    const byCategory = filter === 'all' ? verbs : verbs.filter((v) => v.category === filter)
+    const q = query.trim().toLowerCase()
+    if (!q) return byCategory
+    return byCategory.filter((v) => {
+      if (v.infinitive.toLowerCase().includes(q)) return true
+      if (v.english.toLowerCase().includes(q)) return true
+      return Object.values(v.conjugation).some((form) => form.toLowerCase().includes(q))
+    })
+  }, [filter, query])
 
   return (
     <div className="flex flex-col gap-4 py-4">
@@ -65,6 +72,44 @@ export function VerbsScreen({ onBack }: Props) {
             {filtered.length} of {verbs.length} verbs
           </p>
         </div>
+      </div>
+
+      {/* Search */}
+      <div className="relative">
+        <svg
+          className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"
+          />
+        </svg>
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search verbs…"
+          aria-label="Search verbs"
+          className="w-full pl-9 pr-9 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+        />
+        {query && (
+          <button
+            type="button"
+            onClick={() => setQuery('')}
+            aria-label="Clear search"
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        )}
       </div>
 
       {/* Filter chips */}
@@ -90,7 +135,7 @@ export function VerbsScreen({ onBack }: Props) {
       {/* Verb cards */}
       {filtered.length === 0 ? (
         <div className="text-center py-12 text-slate-400 dark:text-slate-500 text-sm">
-          No verbs in this category
+          No verbs match
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
