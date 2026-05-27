@@ -252,6 +252,13 @@ export const verbs: Verb[] = [
     conjugation: { ich: 'stehe auf', du: 'stehst auf', erSieEs: 'steht auf', wir: 'stehen auf', ihr: 'steht auf', Sie: 'stehen auf' },
     example: { de: 'Ich stehe um 7 Uhr auf.', en: 'I get up at 7.' },
   },
+  {
+    infinitive: 'verstehen',
+    english: 'to understand',
+    category: 'irregular',
+    conjugation: { ich: 'verstehe', du: 'verstehst', erSieEs: 'versteht', wir: 'verstehen', ihr: 'versteht', Sie: 'verstehen' },
+    example: { de: 'Ich verstehe das nicht.', en: "I don't understand that." },
+  },
 
   // — Regular —
   {
