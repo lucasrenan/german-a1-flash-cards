@@ -6,6 +6,7 @@ const SETTINGS_KEY = 'a1fc_settings'
 export const DEFAULT_SETTINGS: Settings = {
   newCardsPerSession: 10,
   maxReviewsPerSession: 1,
+  shuffleNewCards: false,
   autoplayAudio: false,
   showExamplesByDefault: true,
   audioPlaybackRate: 0.85,

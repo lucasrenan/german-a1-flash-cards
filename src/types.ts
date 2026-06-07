@@ -28,6 +28,7 @@ export type ThemePreference = 'system' | 'light' | 'dark'
 export interface Settings {
   newCardsPerSession: number
   maxReviewsPerSession: number
+  shuffleNewCards: boolean
   autoplayAudio: boolean
   showExamplesByDefault: boolean
   audioPlaybackRate: number

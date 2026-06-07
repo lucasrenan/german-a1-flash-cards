@@ -48,9 +48,11 @@ export function buildQueue(
     }
   }
 
+  const orderedNew = settings.shuffleNewCards ? shuffle(newCards) : newCards
+
   switch (filter) {
     case 'new':
-      return newCards.slice(0, settings.newCardsPerSession)
+      return orderedNew.slice(0, settings.newCardsPerSession)
 
     case 'due':
       return shuffle([...dueReview, ...dueLearning]).slice(0, settings.maxReviewsPerSession)
@@ -61,7 +63,7 @@ export function buildQueue(
     case 'all':
     default: {
       const reviews = shuffle([...dueReview, ...dueLearning]).slice(0, settings.maxReviewsPerSession)
-      const fresh = newCards.slice(0, settings.newCardsPerSession)
+      const fresh = orderedNew.slice(0, settings.newCardsPerSession)
       return interleave(reviews, fresh)
     }
   }

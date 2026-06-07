@@ -70,6 +70,20 @@ describe('buildQueue', () => {
     expect(queue).toEqual(['a', 'b'])
   })
 
+  it('filter=new keeps deck order when shuffleNewCards is off', () => {
+    const cards = [card('a'), card('b'), card('c')]
+    const queue = buildQueue(cards, {}, 'new', settingsWith({ shuffleNewCards: false }))
+    expect(queue).toEqual(['a', 'b', 'c'])
+  })
+
+  it('filter=new shuffles new cards when shuffleNewCards is on', () => {
+    const cards = [card('a'), card('b'), card('c')]
+    const queue = buildQueue(cards, {}, 'new', settingsWith({ shuffleNewCards: true }))
+    // Same cards, but no longer in deck order (Math.random mocked to 0).
+    expect([...queue].sort()).toEqual(['a', 'b', 'c'])
+    expect(queue).not.toEqual(['a', 'b', 'c'])
+  })
+
   it('filter=new ignores review/learning cards', () => {
     const cards = [card('a'), card('b')]
     const states = {

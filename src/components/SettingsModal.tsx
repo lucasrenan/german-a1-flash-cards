@@ -137,6 +137,25 @@ export function SettingsModal({ settings, onSave, onThemeChange, onClose }: Prop
             />
           </label>
 
+          <label className="flex items-center justify-between py-1">
+            <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Randomize new card order</span>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={form.shuffleNewCards}
+              onClick={() => setForm((f) => ({ ...f, shuffleNewCards: !f.shuffleNewCards }))}
+              className={`relative w-11 h-6 rounded-full transition-colors ${
+                form.shuffleNewCards ? 'bg-indigo-600' : 'bg-slate-300 dark:bg-slate-600'
+              }`}
+            >
+              <span
+                className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
+                  form.shuffleNewCards ? 'translate-x-5' : ''
+                }`}
+              />
+            </button>
+          </label>
+
           <label className="flex flex-col gap-1.5">
             <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Audio playback speed</span>
             <select
