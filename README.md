@@ -2,6 +2,8 @@
 
 A simple web app for studying German A1 vocabulary using spaced repetition.
 
+**Live app: [german-a1.lucasrenan.com](https://german-a1.lucasrenan.com/)**
+
 ## About
 
 This is a **personal project** built for my own German learning. I wanted a lightweight, mobile-friendly flashcard app I could use anywhere — including on my phone while commuting — without depending on Anki or a heavyweight study platform.
@@ -17,6 +19,9 @@ It was **vibe-coded with Claude Code**: I described what I wanted, made design d
 - **Browse all words** — paginated table view showing your progress per card (status + last rating)
 - **Audio pronunciation** with adjustable playback speed (0.5×–1.25×)
 - **Toggleable example sentences** — show or hide the example by default
+- **Randomizable new-card order** — shuffle new cards instead of going in list order
+- **Verbs reference page** (`/verbs`) — searchable, collapsible conjugation tables for common A1 verbs
+- **Light / dark / system theme**
 - **Progress persists** in your browser's localStorage — no backend, no account
 - **Mobile-friendly** responsive UI
 
