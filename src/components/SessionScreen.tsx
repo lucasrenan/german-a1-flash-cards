@@ -62,7 +62,7 @@ export function SessionScreen({ queue, cardMap, settings, onRate, onExit, stats 
         autoplayAudio={settings.autoplayAudio}
         showExamplesByDefault={settings.showExamplesByDefault}
         audioPlaybackRate={settings.audioPlaybackRate}
-        onReveal={() => setIsRevealed(true)}
+        onToggleReveal={() => setIsRevealed((v) => !v)}
       />
 
       {isRevealed && <AnswerButtons onRate={handleRate} />}

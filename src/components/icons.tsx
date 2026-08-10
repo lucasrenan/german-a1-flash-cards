@@ -69,6 +69,17 @@ export function ArrowRightIcon({ className }: IconProps) {
   )
 }
 
+/** Two arrows chasing each other — "turn this card over". */
+export function FlipIcon({ className }: IconProps) {
+  return (
+    <Svg className={className}>
+      <path d="M4 9.5a6.5 6.5 0 0 1 11-4.7l2.5 2.2" />
+      <path d="M20 14.5a6.5 6.5 0 0 1-11 4.7L6.5 17" />
+      <path d="M17.5 3.5V7h-3.5M6.5 20.5V17h3.5" />
+    </Svg>
+  )
+}
+
 export function CloseIcon({ className }: IconProps) {
   return (
     <Svg className={className}>
