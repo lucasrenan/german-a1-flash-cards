@@ -1,5 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect x="6" y="10" width="52" height="44" rx="8" fill="#4f46e5"/>
-  <rect x="6" y="10" width="52" height="44" rx="8" fill="none" stroke="#3730a3" stroke-width="2"/>
-  <text x="32" y="42" font-family="ui-sans-serif, system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="26" font-weight="800" fill="#ffffff" text-anchor="middle">A1</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="German A1 Flash Cards">
+  <!-- Vermilion tile with the 2px ink border every surface in the app wears. -->
+  <rect width="64" height="64" rx="14" fill="#FE4D03"/>
+  <rect x="1" y="1" width="62" height="62" rx="13" fill="none" stroke="#151515" stroke-width="2"/>
+
+  <!-- The deck: an ink answer face sitting under the paper front, same fan as FlashCard. -->
+  <g transform="translate(28 32) rotate(-17)">
+    <rect x="-14" y="-18" width="28" height="36" rx="5" fill="#151515"/>
+  </g>
+
+  <g transform="translate(34 32) rotate(5)">
+    <rect x="-14" y="-18" width="28" height="36" rx="5" fill="#FFFDF8"/>
+    <!-- Eyebrow label, then the headword: A1 drawn in the Space Grotesk manner —
+         flat-cut apex (via the tight miter limit), squared terminals, flagged one. -->
+    <rect x="-7" y="-13.5" width="8" height="3" rx="1.5" fill="#FE4D03"/>
+    <g
+      transform="translate(2.6 1)"
+      fill="none"
+      stroke="#151515"
+      stroke-width="3.1"
+      stroke-linecap="butt"
+      stroke-linejoin="miter"
+      stroke-miterlimit="1.45"
+    >
+      <path d="M -11.6 8 L -6.6 -6.4 L -1.6 8"/>
+      <path d="M -9.9 3.5 H -3.3"/>
+      <path d="M 1.6 -3.2 L 4.2 -6.4 L 4.2 8"/>
+    </g>
+  </g>
 </svg>
