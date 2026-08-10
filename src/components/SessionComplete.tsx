@@ -6,47 +6,69 @@ interface Props {
   onStudyAgain: () => void
 }
 
+/** The verdict is the hero — a German line the learner can actually read at A1. */
+function verdict(pct: number): { de: string; en: string } {
+  if (pct >= 80) return { de: 'Sehr gut.', en: 'Most of these stuck. Recall is strong.' }
+  if (pct >= 50) return { de: 'Gut gemacht.', en: 'Solid session. A few need another pass.' }
+  return { de: 'Weiter so.', en: 'These need more repetitions. That is how it works.' }
+}
+
+const BREAKDOWN: { key: keyof Omit<SessionStats, 'total'>; label: string; bar: string }[] = [
+  { key: 'again', label: 'Again', bar: 'bg-brick dark:bg-brick-light' },
+  { key: 'hard', label: 'Hard', bar: 'bg-vermilion' },
+  { key: 'good', label: 'Good', bar: 'bg-moss dark:bg-moss-light' },
+  { key: 'easy', label: 'Easy', bar: 'bg-dandelion' },
+]
+
 export function SessionComplete({ stats, onHome, onStudyAgain }: Props) {
   const passed = stats.good + stats.easy
   const pct = stats.total > 0 ? Math.round((passed / stats.total) * 100) : 0
+  const { de, en } = verdict(pct)
 
   return (
-    <div className="flex flex-col items-center justify-center gap-8 py-12 px-4 text-center">
-      <div className="text-5xl">
-        {pct >= 80 ? '🎉' : pct >= 50 ? '💪' : '📖'}
-      </div>
-
+    <div className="flex flex-col gap-8 py-10">
       <div>
-        <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Session complete!</h2>
-        <p className="text-slate-500 dark:text-slate-400 mt-1">{stats.total} cards reviewed</p>
+        <p className="text-eyebrow uppercase text-vermilion">Session complete</p>
+        <h2 className="mt-3 font-display text-4xl font-bold tracking-tight text-ink dark:text-cream">
+          {de}
+        </h2>
+        <p className="mt-3 text-ink/60 dark:text-cream/60">{en}</p>
+        <p className="mt-5 text-sm text-ink/50 dark:text-cream/50">
+          {stats.total} cards reviewed · {pct}% recalled
+        </p>
       </div>
 
-      <div className="w-full max-w-xs bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-5 grid grid-cols-2 gap-3">
-        {[
-          { label: 'Again', value: stats.again, color: 'text-red-500 dark:text-red-400' },
-          { label: 'Hard', value: stats.hard, color: 'text-orange-500 dark:text-orange-400' },
-          { label: 'Good', value: stats.good, color: 'text-green-600 dark:text-green-400' },
-          { label: 'Easy', value: stats.easy, color: 'text-blue-500 dark:text-blue-400' },
-        ].map(({ label, value, color }) => (
-          <div key={label} className="flex flex-col items-center py-2">
-            <span className={`text-2xl font-bold ${color}`}>{value}</span>
-            <span className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{label}</span>
+      <div className="grid grid-cols-2 gap-2">
+        {BREAKDOWN.map(({ key, label, bar }) => (
+          <div
+            key={key}
+            className="overflow-hidden rounded-card border-2 border-ink/10 bg-cream-paper dark:border-cream/15 dark:bg-ink-soft"
+          >
+            <div className={`h-1.5 ${bar}`} />
+            <div className="p-4">
+              <p className="font-display text-2xl font-bold tracking-tight text-ink dark:text-cream">
+                {stats[key]}
+              </p>
+              <p className="mt-1.5 text-eyebrow uppercase text-ink/50 dark:text-cream/50">
+                {label}
+              </p>
+            </div>
           </div>
         ))}
       </div>
 
-      <div className="flex flex-col gap-3 w-full max-w-xs">
+      <div className="flex flex-col gap-2">
         <button
           onClick={onStudyAgain}
-          className="w-full py-3 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 active:bg-indigo-800 transition-colors"
+          className="w-full rounded-card border-2 border-vermilion bg-vermilion py-4 font-display text-base font-bold tracking-tight text-cream-paper transition-colors hover:border-vermilion-dark hover:bg-vermilion-dark"
         >
-          Study Again
+          Study again
         </button>
         <button
           onClick={onHome}
-          className="w-full py-3 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-100 font-semibold hover:bg-slate-200 dark:hover:bg-slate-600 active:bg-slate-300 dark:active:bg-slate-500 transition-colors"
+          className="w-full rounded-card border-2 border-ink/10 bg-cream-paper py-4 font-display text-base font-semibold tracking-tight text-ink transition-colors hover:border-ink/30 dark:border-cream/15 dark:bg-ink-soft dark:text-cream dark:hover:border-cream/35"
         >
-          Back to Home
+          Back to home
         </button>
       </div>
     </div>

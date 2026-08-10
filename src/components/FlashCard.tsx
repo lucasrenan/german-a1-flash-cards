@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { Card } from '../types'
+import { ChevronRightIcon, SpeakerIcon } from './icons'
 
 interface Props {
   card: Card
@@ -51,98 +52,137 @@ export function FlashCard({
   }
 
   return (
-    <div className="flex flex-col gap-4 w-full">
-      {/* Front: German */}
-      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1 min-w-0">
-            <p className="text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">German</p>
-            <p className="text-2xl font-semibold text-slate-800 dark:text-slate-100 leading-tight break-words">{card.deWord}</p>
-          </div>
-          <button
-            onClick={playAudio}
-            aria-label="Play pronunciation"
-            className={`flex-shrink-0 w-11 h-11 rounded-full flex items-center justify-center transition-colors ${
-              isPlaying
-                ? 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-300'
-                : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 active:bg-slate-300 dark:active:bg-slate-500'
-            }`}
-          >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.784L4.438 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.438l3.945-3.784a1 1 0 011 .076zM14.657 5.343a1 1 0 011.414 0A9.972 9.972 0 0118 10a9.972 9.972 0 01-1.929 4.657 1 1 0 11-1.414-1.414A7.971 7.971 0 0016 10c0-1.571-.453-3.036-1.234-4.272a1 1 0 010-1.385z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </button>
-        </div>
+    <div className="flex flex-col gap-5 w-full">
+      <div className="relative">
+        {/* Deck underneath: two layers peeking out below the active card. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 translate-y-[14px] scale-[0.94] rounded-card border-2 border-ink/10 bg-cream-paper opacity-50 dark:border-cream/10 dark:bg-ink-soft"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 translate-y-[7px] scale-[0.97] rounded-card border-2 border-ink/10 bg-cream-paper opacity-80 dark:border-cream/10 dark:bg-ink-soft"
+        />
 
-        {card.deSentence && (
-          <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700">
-            <button
-              onClick={() => setShowDeSentence((v) => !v)}
-              className="text-sm text-indigo-500 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium flex items-center gap-1"
+        <div className="card-perspective relative">
+          <div className={`card-3d grid min-h-[17rem] ${isRevealed ? 'card-flipped' : ''}`}>
+            {/* Front — German, on paper */}
+            <div
+              aria-hidden={isRevealed}
+              className="card-face [grid-area:1/1] flex flex-col rounded-card border-2 border-ink/10 bg-cream-paper p-6 dark:border-cream/15 dark:bg-ink-soft"
             >
-              <svg
-                className={`w-4 h-4 transition-transform ${showDeSentence ? 'rotate-90' : ''}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-              {showDeSentence ? 'Hide example' : 'Show example'}
-            </button>
-            {showDeSentence && (
-              <p className="mt-2 text-slate-600 dark:text-slate-300 italic text-sm leading-relaxed">{card.deSentence}</p>
-            )}
-          </div>
-        )}
-      </div>
-
-      {/* Reveal button or Answer */}
-      {!isRevealed ? (
-        <button
-          onClick={onReveal}
-          className="w-full py-4 rounded-2xl bg-indigo-600 text-white font-semibold text-base shadow-sm hover:bg-indigo-700 active:bg-indigo-800 transition-colors"
-        >
-          Show Answer
-        </button>
-      ) : (
-        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 animate-fade-in">
-          <p className="text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">English</p>
-          <p className="text-2xl font-semibold text-slate-800 dark:text-slate-100 leading-tight break-words">{card.enWord}</p>
-
-          {card.enNote && (
-            <span className="mt-2 inline-block text-xs font-medium px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300">
-              {card.enNote}
-            </span>
-          )}
-
-          {card.enSentence && (
-            <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700">
-              <button
-                onClick={() => setShowEnSentence((v) => !v)}
-                className="text-sm text-indigo-500 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium flex items-center gap-1"
-              >
-                <svg
-                  className={`w-4 h-4 transition-transform ${showEnSentence ? 'rotate-90' : ''}`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              <div className="flex items-start justify-between gap-4">
+                <div className="min-w-0 flex-1">
+                  <p className="text-eyebrow uppercase text-vermilion">Deutsch</p>
+                  <p className="mt-3 break-words font-display text-word font-bold text-ink dark:text-cream">
+                    {card.deWord}
+                  </p>
+                </div>
+                <button
+                  onClick={playAudio}
+                  tabIndex={isRevealed ? -1 : undefined}
+                  aria-label="Play pronunciation"
+                  className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-card border-2 transition-colors ${
+                    isPlaying
+                      ? 'border-vermilion bg-vermilion text-cream-paper'
+                      : 'border-ink/10 text-ink hover:border-vermilion hover:text-vermilion dark:border-cream/15 dark:text-cream dark:hover:border-vermilion dark:hover:text-vermilion'
+                  }`}
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-                {showEnSentence ? 'Hide example' : 'Show example'}
-              </button>
-              {showEnSentence && (
-                <p className="mt-2 text-slate-600 dark:text-slate-300 italic text-sm leading-relaxed">{card.enSentence}</p>
+                  <SpeakerIcon />
+                </button>
+              </div>
+
+              {card.deSentence && (
+                <div className="mt-auto pt-6">
+                  <Disclosure
+                    isOpen={showDeSentence}
+                    onToggle={() => setShowDeSentence((v) => !v)}
+                    tabIndex={isRevealed ? -1 : undefined}
+                    tone="front"
+                  />
+                  {showDeSentence && (
+                    <p className="mt-2 text-sm leading-relaxed text-ink/70 dark:text-cream/70">
+                      {card.deSentence}
+                    </p>
+                  )}
+                </div>
               )}
             </div>
-          )}
+
+            {/* Back — English, on ink. Crossing to the answer flips the color scheme. */}
+            <div
+              aria-hidden={!isRevealed}
+              className="card-face card-face-back [grid-area:1/1] flex flex-col rounded-card border-2 border-ink bg-ink p-6 dark:border-dandelion/35"
+            >
+              <div>
+                <p className="text-eyebrow uppercase text-dandelion">English</p>
+                <p className="mt-3 break-words font-display text-word font-bold text-cream">
+                  {card.enWord}
+                </p>
+
+                {card.enNote && (
+                  <span className="mt-3 inline-block rounded-card border border-dandelion/40 bg-dandelion/15 px-2.5 py-1 text-xs font-medium text-dandelion">
+                    {card.enNote}
+                  </span>
+                )}
+              </div>
+
+              {card.enSentence && (
+                <div className="mt-auto pt-6">
+                  <Disclosure
+                    isOpen={showEnSentence}
+                    onToggle={() => setShowEnSentence((v) => !v)}
+                    tabIndex={isRevealed ? undefined : -1}
+                    tone="back"
+                  />
+                  {showEnSentence && (
+                    <p className="mt-2 text-sm leading-relaxed text-cream/70">{card.enSentence}</p>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
+      </div>
+
+      {!isRevealed && (
+        <button
+          onClick={onReveal}
+          className="mt-2 w-full rounded-card border-2 border-vermilion bg-vermilion py-4 font-display text-base font-bold tracking-tight text-cream-paper transition-colors hover:border-vermilion-dark hover:bg-vermilion-dark"
+        >
+          Flip the card
+        </button>
       )}
     </div>
+  )
+}
+
+function Disclosure({
+  isOpen,
+  onToggle,
+  tabIndex,
+  tone,
+}: {
+  isOpen: boolean
+  onToggle: () => void
+  tabIndex?: number
+  tone: 'front' | 'back'
+}) {
+  return (
+    <button
+      onClick={onToggle}
+      tabIndex={tabIndex}
+      aria-expanded={isOpen}
+      className={`flex items-center gap-1 text-eyebrow uppercase transition-colors ${
+        tone === 'front'
+          ? 'text-vermilion hover:text-vermilion-dark'
+          : 'text-dandelion hover:text-dandelion/80'
+      }`}
+    >
+      <ChevronRightIcon
+        className={`h-3.5 w-3.5 transition-transform ${isOpen ? 'rotate-90' : ''}`}
+      />
+      {isOpen ? 'Hide example' : 'Show example'}
+    </button>
   )
 }

@@ -1,5 +1,6 @@
 import { Fragment, useMemo, useState } from 'react'
 import { verbs, type Verb, type VerbCategory } from '../data/verbs'
+import { ArrowLeftIcon, ChevronDownIcon, CloseIcon, SearchIcon } from './icons'
 
 interface Props {
   onBack: () => void
@@ -15,11 +16,12 @@ const FILTERS: { mode: CategoryFilter; label: string }[] = [
   { mode: 'regular', label: 'Regular' },
 ]
 
+/** One accent per category, so a verb's class is readable at a glance. */
 const CATEGORY_STYLES: Record<VerbCategory, string> = {
-  auxiliary: 'bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300',
-  modal: 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300',
-  irregular: 'bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300',
-  regular: 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300',
+  auxiliary: 'border-dandelion bg-dandelion-soft text-ink dark:bg-transparent dark:text-dandelion',
+  modal: 'border-vermilion/40 bg-vermilion-soft text-vermilion-dark dark:bg-transparent dark:text-vermilion',
+  irregular: 'border-brick/40 bg-brick-soft text-brick dark:border-brick-light/50 dark:bg-transparent dark:text-brick-light',
+  regular: 'border-moss/40 bg-moss-soft text-moss dark:border-moss-light/50 dark:bg-transparent dark:text-moss-light',
 }
 
 const CATEGORY_LABELS: Record<VerbCategory, string> = {
@@ -54,76 +56,63 @@ export function VerbsScreen({ onBack }: Props) {
   }, [filter, query])
 
   return (
-    <div className="flex flex-col gap-4 py-4">
+    <div className="flex flex-col gap-5 py-6">
       {/* Header */}
       <div className="flex items-center gap-3">
         <button
           onClick={onBack}
           aria-label="Back"
-          className="w-10 h-10 flex items-center justify-center rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 active:bg-slate-200 dark:active:bg-slate-700"
+          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-card border-2 border-ink/10 text-ink transition-colors hover:border-vermilion hover:text-vermilion dark:border-cream/15 dark:text-cream dark:hover:border-vermilion dark:hover:text-vermilion"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
+          <ArrowLeftIcon className="h-4 w-4" />
         </button>
         <div className="flex-1">
-          <h1 className="text-xl font-bold text-slate-800 dark:text-slate-100">Verbs</h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
-            {filtered.length} of {verbs.length} verbs
-          </p>
+          <p className="text-eyebrow uppercase text-vermilion">Präsens</p>
+          <h1 className="mt-1.5 font-display text-2xl font-bold tracking-tight text-ink dark:text-cream">
+            Verbs
+          </h1>
         </div>
+        <span className="text-sm text-ink/50 dark:text-cream/50">
+          {filtered.length}/{verbs.length}
+        </span>
       </div>
 
       {/* Search */}
       <div className="relative">
-        <svg
-          className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"
-          />
-        </svg>
+        <SearchIcon className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink/40 dark:text-cream/40" />
         <input
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search verbs…"
           aria-label="Search verbs"
-          className="w-full pl-9 pr-9 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          className="w-full rounded-card border-2 border-ink/10 bg-cream-paper py-2.5 pl-10 pr-10 text-sm text-ink transition-colors placeholder:text-ink/40 hover:border-ink/30 focus:border-vermilion focus:outline-none dark:border-cream/15 dark:bg-ink-soft dark:text-cream dark:placeholder:text-cream/40 dark:hover:border-cream/35 dark:focus:border-vermilion"
         />
         {query && (
           <button
             type="button"
             onClick={() => setQuery('')}
             aria-label="Clear search"
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+            className="absolute right-3 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full text-ink/50 transition-colors hover:text-vermilion dark:text-cream/50 dark:hover:text-vermilion"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <CloseIcon className="h-4 w-4" />
           </button>
         )}
       </div>
 
-      {/* Filter chips */}
-      <div className="flex gap-2 overflow-x-auto -mx-4 px-4 pb-1">
+      {/* Filters */}
+      <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
         {FILTERS.map(({ mode, label }) => {
           const isActive = filter === mode
           return (
             <button
               key={mode}
               onClick={() => setFilter(mode)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium border whitespace-nowrap transition-colors ${
+              aria-pressed={isActive}
+              className={`whitespace-nowrap rounded-card border-2 px-4 py-2 text-sm font-medium transition-colors ${
                 isActive
-                  ? 'bg-indigo-600 text-white border-indigo-600'
-                  : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
+                  ? 'border-ink bg-ink text-cream dark:border-cream dark:bg-cream dark:text-ink'
+                  : 'border-ink/10 bg-cream-paper text-ink hover:border-ink/30 dark:border-cream/15 dark:bg-ink-soft dark:text-cream dark:hover:border-cream/35'
               }`}
             >
               {label}
@@ -134,11 +123,14 @@ export function VerbsScreen({ onBack }: Props) {
 
       {/* Verb cards */}
       {filtered.length === 0 ? (
-        <div className="text-center py-12 text-slate-400 dark:text-slate-500 text-sm">
-          No verbs match
+        <div className="rounded-card border-2 border-dashed border-ink/15 py-14 text-center dark:border-cream/20">
+          <p className="text-eyebrow uppercase text-ink/40 dark:text-cream/40">No match</p>
+          <p className="mt-2 text-sm text-ink/60 dark:text-cream/60">
+            Try a different spelling, or clear the filter.
+          </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           {filtered.map((verb) => (
             <VerbCard key={verb.infinitive} verb={verb} />
           ))}
@@ -152,51 +144,43 @@ function VerbCard({ verb }: { verb: Verb }) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <article className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col overflow-hidden">
-      {/* Title row — clickable toggle */}
+    <article className="flex flex-col overflow-hidden rounded-card border-2 border-ink/10 bg-cream-paper dark:border-cream/15 dark:bg-ink-soft">
       <button
         type="button"
         onClick={() => setIsOpen((v) => !v)}
         aria-expanded={isOpen}
-        className="flex items-start justify-between gap-3 p-4 text-left hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
+        className="flex items-start justify-between gap-3 p-4 text-left transition-colors hover:bg-ink/5 dark:hover:bg-cream/5"
       >
         <div className="min-w-0 flex-1">
-          <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100 leading-tight">
+          <h2 className="font-display text-lg font-bold leading-tight tracking-tight text-ink dark:text-cream">
             {verb.infinitive}
           </h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">{verb.english}</p>
+          <p className="mt-1 text-sm text-ink/55 dark:text-cream/55">{verb.english}</p>
         </div>
-        <div className="flex items-center gap-2 flex-shrink-0">
+        <div className="flex flex-shrink-0 items-center gap-2">
           <span
-            className={`text-xs font-medium px-2 py-0.5 rounded-full whitespace-nowrap ${CATEGORY_STYLES[verb.category]}`}
+            className={`whitespace-nowrap rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider ${CATEGORY_STYLES[verb.category]}`}
           >
             {CATEGORY_LABELS[verb.category]}
           </span>
-          <svg
-            className={`w-4 h-4 text-slate-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
+          <ChevronDownIcon
+            className={`h-4 w-4 text-ink/40 transition-transform dark:text-cream/40 ${isOpen ? 'rotate-180' : ''}`}
+          />
         </div>
       </button>
 
       {isOpen && (
-        <div className="px-4 pb-4 flex flex-col gap-3">
-          {/* Conjugation table — subtle divider after er/sie/es separates singular from plural */}
-          <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-sm">
+        <div className="flex flex-col gap-3 px-4 pb-4">
+          {/* Conjugation table — the rule after er/sie/es splits singular from plural. */}
+          <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm">
             {PRONOUN_LABELS.map(({ key, label }, idx) => {
-              const divider =
-                idx === 3 ? 'pt-2 mt-1 border-t border-slate-100 dark:border-slate-700' : ''
+              const divider = idx === 3 ? 'mt-1.5 border-t-2 border-ink/10 pt-3 dark:border-cream/10' : ''
               return (
                 <Fragment key={key}>
-                  <dt className={`text-slate-500 dark:text-slate-400 font-medium ${divider}`}>
-                    {label}
-                  </dt>
-                  <dd className={`text-slate-800 dark:text-slate-100 font-mono ${divider}`}>
+                  <dt className={`text-ink/50 dark:text-cream/50 ${divider}`}>{label}</dt>
+                  <dd
+                    className={`font-display font-semibold tracking-tight text-ink dark:text-cream ${divider}`}
+                  >
                     {verb.conjugation[key]}
                   </dd>
                 </Fragment>
@@ -205,13 +189,9 @@ function VerbCard({ verb }: { verb: Verb }) {
           </dl>
 
           {/* Example */}
-          <div className="pt-3 border-t border-slate-100 dark:border-slate-700">
-            <p className="text-sm text-slate-800 dark:text-slate-100 italic">
-              “{verb.example.de}”
-            </p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              {verb.example.en}
-            </p>
+          <div className="border-t-2 border-ink/10 pt-3 dark:border-cream/10">
+            <p className="text-sm text-ink dark:text-cream">“{verb.example.de}”</p>
+            <p className="mt-1 text-xs text-ink/50 dark:text-cream/50">{verb.example.en}</p>
           </div>
         </div>
       )}

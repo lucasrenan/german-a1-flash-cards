@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import type { Card, CardState, Rating } from '../types'
 import { createInitialState } from '../lib/sm2'
+import { ArrowLeftIcon, ArrowRightIcon } from './icons'
 
 interface Props {
   cards: Card[]
@@ -19,17 +20,26 @@ const FILTERS: { mode: StatusFilter; label: string }[] = [
   { mode: 'review', label: 'Review' },
 ]
 
+const BADGE_BASE =
+  'rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider whitespace-nowrap'
+
 const STATUS_STYLES: Record<CardState['status'], string> = {
-  new: 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300',
-  learning: 'bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300',
-  review: 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300',
+  new: 'border-ink/20 text-ink/55 dark:border-cream/25 dark:text-cream/55',
+  learning: 'border-vermilion/40 bg-vermilion-soft text-vermilion-dark dark:bg-transparent dark:text-vermilion',
+  review: 'border-moss/40 bg-moss-soft text-moss dark:border-moss-light/50 dark:bg-transparent dark:text-moss-light',
+}
+
+const STATUS_LABELS: Record<CardState['status'], string> = {
+  new: 'New',
+  learning: 'Learning',
+  review: 'Review',
 }
 
 const RATING_STYLES: Record<Rating, string> = {
-  again: 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300',
-  hard: 'bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300',
-  good: 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300',
-  easy: 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300',
+  again: 'border-brick/40 bg-brick-soft text-brick dark:border-brick-light/50 dark:bg-transparent dark:text-brick-light',
+  hard: 'border-vermilion/40 bg-vermilion-soft text-vermilion-dark dark:bg-transparent dark:text-vermilion',
+  good: 'border-moss/40 bg-moss-soft text-moss dark:border-moss-light/50 dark:bg-transparent dark:text-moss-light',
+  easy: 'border-dandelion bg-dandelion-soft text-ink dark:bg-transparent dark:text-dandelion',
 }
 
 const RATING_LABELS: Record<Rating, string> = {
@@ -63,36 +73,38 @@ export function WordsScreen({ cards, cardStates, onBack }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-4 py-4">
+    <div className="flex flex-col gap-5 py-6">
       {/* Header */}
       <div className="flex items-center gap-3">
         <button
           onClick={onBack}
           aria-label="Back"
-          className="w-10 h-10 flex items-center justify-center rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 active:bg-slate-200 dark:active:bg-slate-700"
+          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-card border-2 border-ink/10 text-ink transition-colors hover:border-vermilion hover:text-vermilion dark:border-cream/15 dark:text-cream dark:hover:border-vermilion dark:hover:text-vermilion"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
+          <ArrowLeftIcon className="h-4 w-4" />
         </button>
         <div className="flex-1">
-          <h1 className="text-xl font-bold text-slate-800 dark:text-slate-100">Words</h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400">{filtered.length} cards</p>
+          <p className="text-eyebrow uppercase text-vermilion">Deck</p>
+          <h1 className="mt-1.5 font-display text-2xl font-bold tracking-tight text-ink dark:text-cream">
+            Words
+          </h1>
         </div>
+        <span className="text-sm text-ink/50 dark:text-cream/50">{filtered.length}</span>
       </div>
 
-      {/* Filter chips */}
-      <div className="flex gap-2 overflow-x-auto -mx-4 px-4 pb-1">
+      {/* Filters */}
+      <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
         {FILTERS.map(({ mode, label }) => {
           const isActive = filter === mode
           return (
             <button
               key={mode}
               onClick={() => changeFilter(mode)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium border whitespace-nowrap transition-colors ${
+              aria-pressed={isActive}
+              className={`whitespace-nowrap rounded-card border-2 px-4 py-2 text-sm font-medium transition-colors ${
                 isActive
-                  ? 'bg-indigo-600 text-white border-indigo-600'
-                  : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
+                  ? 'border-ink bg-ink text-cream dark:border-cream dark:bg-cream dark:text-ink'
+                  : 'border-ink/10 bg-cream-paper text-ink hover:border-ink/30 dark:border-cream/15 dark:bg-ink-soft dark:text-cream dark:hover:border-cream/35'
               }`}
             >
               {label}
@@ -103,25 +115,28 @@ export function WordsScreen({ cards, cardStates, onBack }: Props) {
 
       {/* List */}
       {pageItems.length === 0 ? (
-        <div className="text-center py-12 text-slate-400 dark:text-slate-500 text-sm">No cards in this filter</div>
+        <div className="rounded-card border-2 border-dashed border-ink/15 py-14 text-center dark:border-cream/20">
+          <p className="text-eyebrow uppercase text-ink/40 dark:text-cream/40">Nothing here</p>
+          <p className="mt-2 text-sm text-ink/60 dark:text-cream/60">
+            No cards carry this status yet.
+          </p>
+        </div>
       ) : (
-        <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden">
+        <div className="divide-y-2 divide-ink/10 overflow-hidden rounded-card border-2 border-ink/10 bg-cream-paper dark:divide-cream/10 dark:border-cream/15 dark:bg-ink-soft">
           {pageItems.map(({ card, state }) => (
-            <div key={card.id} className="flex items-center gap-3 p-3">
-              <div className="flex-1 min-w-0">
-                <p className="font-medium text-slate-800 dark:text-slate-100 truncate">{card.deWord}</p>
-                <p className="text-sm text-slate-500 dark:text-slate-400 truncate">{card.enWord}</p>
+            <div key={card.id} className="flex items-center gap-3 p-4">
+              <div className="min-w-0 flex-1">
+                <p className="truncate font-display font-semibold tracking-tight text-ink dark:text-cream">
+                  {card.deWord}
+                </p>
+                <p className="truncate text-sm text-ink/55 dark:text-cream/55">{card.enWord}</p>
               </div>
-              <div className="flex flex-col items-end gap-1 flex-shrink-0">
-                <span
-                  className={`text-xs font-medium px-2 py-0.5 rounded-full ${STATUS_STYLES[state.status]}`}
-                >
-                  {state.status === 'new' ? 'New' : state.status === 'learning' ? 'Learning' : 'Review'}
+              <div className="flex flex-shrink-0 flex-col items-end gap-1.5">
+                <span className={`${BADGE_BASE} ${STATUS_STYLES[state.status]}`}>
+                  {STATUS_LABELS[state.status]}
                 </span>
                 {state.lastRating && (
-                  <span
-                    className={`text-xs font-medium px-2 py-0.5 rounded-full ${RATING_STYLES[state.lastRating]}`}
-                  >
+                  <span className={`${BADGE_BASE} ${RATING_STYLES[state.lastRating]}`}>
                     {RATING_LABELS[state.lastRating]}
                   </span>
                 )}
@@ -133,23 +148,25 @@ export function WordsScreen({ cards, cardStates, onBack }: Props) {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between gap-3 pt-1">
+        <div className="flex items-center justify-between gap-3">
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={safePage <= 1}
-            className="px-4 py-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 rounded-card border-2 border-ink/10 bg-cream-paper px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:border-ink/30 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-ink/10 dark:border-cream/15 dark:bg-ink-soft dark:text-cream dark:hover:border-cream/35 dark:disabled:hover:border-cream/15"
           >
-            ← Prev
+            <ArrowLeftIcon className="h-4 w-4" />
+            Prev
           </button>
-          <span className="text-sm text-slate-500 dark:text-slate-400">
-            Page {safePage} of {totalPages}
+          <span className="text-eyebrow uppercase text-ink/50 dark:text-cream/50">
+            {safePage} / {totalPages}
           </span>
           <button
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={safePage >= totalPages}
-            className="px-4 py-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 rounded-card border-2 border-ink/10 bg-cream-paper px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:border-ink/30 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-ink/10 dark:border-cream/15 dark:bg-ink-soft dark:text-cream dark:hover:border-cream/35 dark:disabled:hover:border-cream/15"
           >
-            Next →
+            Next
+            <ArrowRightIcon className="h-4 w-4" />
           </button>
         </div>
       )}

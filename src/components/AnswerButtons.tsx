@@ -4,48 +4,52 @@ interface Props {
   onRate: (rating: Rating) => void
 }
 
+/**
+ * Ratings run cold to warm across the semantic palette:
+ * brick (again) · vermilion (hard) · moss (good) · dandelion (easy).
+ */
 const BUTTONS: { rating: Rating; label: string; sublabel: string; className: string }[] = [
   {
     rating: 'again',
     label: 'Again',
     sublabel: '<1d',
     className:
-      'bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-300 border-red-200 dark:border-red-800 hover:bg-red-100 dark:hover:bg-red-900/50 active:bg-red-200 dark:active:bg-red-900/70',
+      'bg-brick-soft border-brick text-brick hover:bg-brick hover:text-cream-paper dark:bg-transparent dark:border-brick-light dark:text-brick-light dark:hover:bg-brick-light dark:hover:text-ink',
   },
   {
     rating: 'hard',
     label: 'Hard',
     sublabel: '~1d',
     className:
-      'bg-orange-50 dark:bg-orange-900/30 text-orange-600 dark:text-orange-300 border-orange-200 dark:border-orange-800 hover:bg-orange-100 dark:hover:bg-orange-900/50 active:bg-orange-200 dark:active:bg-orange-900/70',
+      'bg-vermilion-soft border-vermilion text-vermilion-dark hover:bg-vermilion hover:text-cream-paper dark:bg-transparent dark:border-vermilion dark:text-vermilion dark:hover:bg-vermilion dark:hover:text-ink',
   },
   {
     rating: 'good',
     label: 'Good',
     sublabel: '~3d',
     className:
-      'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800 hover:bg-green-100 dark:hover:bg-green-900/50 active:bg-green-200 dark:active:bg-green-900/70',
+      'bg-moss-soft border-moss text-moss hover:bg-moss hover:text-cream-paper dark:bg-transparent dark:border-moss-light dark:text-moss-light dark:hover:bg-moss-light dark:hover:text-ink',
   },
   {
     rating: 'easy',
     label: 'Easy',
     sublabel: '~7d',
     className:
-      'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/50 active:bg-blue-200 dark:active:bg-blue-900/70',
+      'bg-dandelion-soft border-dandelion text-ink hover:bg-dandelion hover:text-ink dark:bg-transparent dark:border-dandelion dark:text-dandelion dark:hover:bg-dandelion dark:hover:text-ink',
   },
 ]
 
 export function AnswerButtons({ onRate }: Props) {
   return (
-    <div className="grid grid-cols-4 gap-2 w-full">
+    <div className="grid w-full grid-cols-4 gap-2 animate-fade-in">
       {BUTTONS.map(({ rating, label, sublabel, className }) => (
         <button
           key={rating}
           onClick={() => onRate(rating)}
-          className={`flex flex-col items-center py-3 px-1 rounded-xl border font-medium transition-colors ${className}`}
+          className={`flex flex-col items-center rounded-card border-2 px-1 py-3 transition-colors ${className}`}
         >
-          <span className="text-sm font-semibold">{label}</span>
-          <span className="text-xs opacity-70 mt-0.5">{sublabel}</span>
+          <span className="font-display text-sm font-bold tracking-tight">{label}</span>
+          <span className="mt-0.5 text-xs opacity-70">{sublabel}</span>
         </button>
       ))}
     </div>

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { Card, Rating, SessionStats, Settings } from '../types'
 import { AnswerButtons } from './AnswerButtons'
 import { FlashCard } from './FlashCard'
+import { CloseIcon } from './icons'
 
 interface Props {
   queue: string[]
@@ -30,34 +31,31 @@ export function SessionScreen({ queue, cardMap, settings, onRate, onExit, stats 
   }
 
   return (
-    <div className="flex flex-col gap-4 py-4 min-h-0">
-      {/* Top bar */}
+    <div className="flex min-h-0 flex-col gap-5 py-6">
+      {/* Progress */}
       <div className="flex items-center gap-3">
         <button
           onClick={onExit}
-          className="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 flex-shrink-0"
           aria-label="End session"
+          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-card border-2 border-ink/10 text-ink transition-colors hover:border-vermilion hover:text-vermilion dark:border-cream/15 dark:text-cream dark:hover:border-vermilion dark:hover:text-vermilion"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
+          <CloseIcon className="h-4 w-4" />
         </button>
 
         <div className="flex-1">
-          <div className="flex justify-between text-xs text-slate-400 dark:text-slate-500 mb-1">
+          <div className="mb-2 flex justify-between text-eyebrow uppercase text-ink/50 dark:text-cream/50">
             <span>{done} done</span>
             <span>{queue.length} left</span>
           </div>
-          <div className="h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+          <div className="h-[6px] w-full bg-ink/10 dark:bg-cream/15">
             <div
-              className="h-full bg-indigo-500 rounded-full transition-all duration-300"
+              className="h-full bg-vermilion transition-all duration-300 ease-card"
               style={{ width: `${progress}%` }}
             />
           </div>
         </div>
       </div>
 
-      {/* Card */}
       <FlashCard
         card={card}
         isRevealed={isRevealed}
@@ -67,7 +65,6 @@ export function SessionScreen({ queue, cardMap, settings, onRate, onExit, stats 
         onReveal={() => setIsRevealed(true)}
       />
 
-      {/* Answer buttons */}
       {isRevealed && <AnswerButtons onRate={handleRate} />}
     </div>
   )

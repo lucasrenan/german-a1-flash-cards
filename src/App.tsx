@@ -178,10 +178,16 @@ export default function App() {
 
   if (view === 'loading') {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4 text-slate-500 dark:text-slate-400">
-          <div className="w-8 h-8 border-2 border-indigo-300 dark:border-indigo-800 border-t-indigo-600 dark:border-t-indigo-400 rounded-full animate-spin" />
-          <p className="text-sm">Loading deck…</p>
+      <div className="min-h-screen bg-cream dark:bg-ink">
+        <div className="mx-auto flex min-h-screen max-w-lg flex-col justify-center px-4">
+          <p className="text-eyebrow uppercase text-vermilion">Deutsch — Goethe A1</p>
+          <h1 className="mt-3 font-display text-4xl font-bold tracking-tight text-ink dark:text-cream">
+            Flash cards
+          </h1>
+          <div className="mt-7 h-[3px] w-full overflow-hidden bg-ink/10 dark:bg-cream/15">
+            <div className="animate-sweep h-full w-1/3 bg-vermilion" />
+          </div>
+          <p className="mt-4 text-sm text-ink/50 dark:text-cream/50">Loading the deck…</p>
         </div>
       </div>
     )
@@ -189,20 +195,27 @@ export default function App() {
 
   if (view === 'error') {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4">
-        <div className="bg-white dark:bg-slate-800 rounded-2xl border border-red-200 dark:border-red-900 p-6 max-w-sm w-full text-center shadow-sm">
-          <p className="text-4xl mb-3">⚠️</p>
-          <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-1">Couldn't load deck</h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">{error}</p>
-          <p className="text-xs text-slate-400 dark:text-slate-500">Make sure you have an internet connection, then reload the page.</p>
+      <div className="min-h-screen bg-cream dark:bg-ink">
+        <div className="mx-auto flex min-h-screen max-w-lg flex-col justify-center px-4">
+          <p className="text-eyebrow uppercase text-brick dark:text-brick-light">Deck unavailable</p>
+          <h1 className="mt-3 font-display text-3xl font-bold tracking-tight text-ink dark:text-cream">
+            The deck didn't load.
+          </h1>
+          <div className="mt-6 rounded-card border-2 border-brick/30 bg-brick-soft p-4 dark:border-brick-light/40 dark:bg-transparent">
+            <p className="text-eyebrow uppercase text-brick dark:text-brick-light">What happened</p>
+            <p className="mt-2 break-words text-sm text-ink dark:text-cream">{error}</p>
+          </div>
+          <p className="mt-6 text-sm text-ink/60 dark:text-cream/60">
+            The wordlist is fetched over the network. Check your connection, then reload the page.
+          </p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
-      <div className="max-w-lg mx-auto px-4 pb-8">
+    <div className="min-h-screen bg-cream dark:bg-ink">
+      <div className="mx-auto max-w-lg px-4 pb-12">
         {view === 'home' && (
           <HomeScreen
             summary={summary}

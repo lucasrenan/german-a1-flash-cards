@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from 'react'
 import type { Settings, ThemePreference } from '../types'
+import { CloseIcon, MonitorIcon, MoonIcon, SunIcon } from './icons'
 
 interface Props {
   settings: Settings
@@ -9,49 +10,15 @@ interface Props {
 }
 
 const THEME_OPTIONS: { value: ThemePreference; label: string; icon: ReactNode }[] = [
-  {
-    value: 'system',
-    label: 'System',
-    icon: (
-      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-        />
-      </svg>
-    ),
-  },
-  {
-    value: 'light',
-    label: 'Light',
-    icon: (
-      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-        />
-      </svg>
-    ),
-  },
-  {
-    value: 'dark',
-    label: 'Dark',
-    icon: (
-      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-        />
-      </svg>
-    ),
-  },
+  { value: 'system', label: 'System', icon: <MonitorIcon className="h-4 w-4" /> },
+  { value: 'light', label: 'Light', icon: <SunIcon className="h-4 w-4" /> },
+  { value: 'dark', label: 'Dark', icon: <MoonIcon className="h-4 w-4" /> },
 ]
+
+const FIELD_CLASS =
+  'rounded-card border-2 border-ink/10 bg-cream-paper px-3 py-2.5 text-ink transition-colors hover:border-ink/30 focus:border-vermilion focus:outline-none dark:border-cream/15 dark:bg-ink dark:text-cream dark:hover:border-cream/35 dark:focus:border-vermilion'
+
+const LABEL_CLASS = 'text-eyebrow uppercase text-ink/50 dark:text-cream/50'
 
 export function SettingsModal({ settings, onSave, onThemeChange, onClose }: Props) {
   const [form, setForm] = useState<Settings>(settings)
@@ -68,28 +35,28 @@ export function SettingsModal({ settings, onSave, onThemeChange, onClose }: Prop
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-black/40 dark:bg-black/60">
-      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl w-full max-w-sm p-6">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">Settings</h2>
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/50 p-4 sm:items-center dark:bg-ink/70">
+      <div className="max-h-[90vh] w-full max-w-sm overflow-y-auto rounded-card border-2 border-ink bg-cream p-6 dark:border-cream/20 dark:bg-ink-soft">
+        <div className="mb-7 flex items-start justify-between gap-4">
+          <div>
+            <p className="text-eyebrow uppercase text-vermilion">Preferences</p>
+            <h2 className="mt-2 font-display text-2xl font-bold tracking-tight text-ink dark:text-cream">
+              Settings
+            </h2>
+          </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700"
+            aria-label="Close settings"
+            className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-card border-2 border-ink/10 text-ink transition-colors hover:border-vermilion hover:text-vermilion dark:border-cream/15 dark:text-cream dark:hover:border-vermilion dark:hover:text-vermilion"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <CloseIcon className="h-4 w-4" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-          <div className="flex flex-col gap-1.5">
-            <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Theme</span>
-            <div
-              role="radiogroup"
-              aria-label="Theme"
-              className="grid grid-cols-3 gap-2"
-            >
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          <div className="flex flex-col gap-2">
+            <span className={LABEL_CLASS}>Theme</span>
+            <div role="radiogroup" aria-label="Theme" className="grid grid-cols-3 gap-2">
               {THEME_OPTIONS.map(({ value, label, icon }) => {
                 const isActive = form.theme === value
                 return (
@@ -99,10 +66,10 @@ export function SettingsModal({ settings, onSave, onThemeChange, onClose }: Prop
                     role="radio"
                     aria-checked={isActive}
                     onClick={() => handleThemeChange(value)}
-                    className={`flex flex-col items-center justify-center gap-1 py-2.5 rounded-lg border text-sm font-medium transition-colors ${
+                    className={`flex flex-col items-center justify-center gap-1.5 rounded-card border-2 py-3 text-sm font-medium transition-colors ${
                       isActive
-                        ? 'bg-indigo-600 text-white border-indigo-600'
-                        : 'bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-200 border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600'
+                        ? 'border-ink bg-ink text-cream dark:border-cream dark:bg-cream dark:text-ink'
+                        : 'border-ink/10 bg-cream-paper text-ink hover:border-ink/30 dark:border-cream/15 dark:bg-ink dark:text-cream dark:hover:border-cream/35'
                     }`}
                   >
                     {icon}
@@ -113,55 +80,42 @@ export function SettingsModal({ settings, onSave, onThemeChange, onClose }: Prop
             </div>
           </div>
 
-          <label className="flex flex-col gap-1.5">
-            <span className="text-sm font-medium text-slate-700 dark:text-slate-200">New cards per session</span>
+          <label className="flex flex-col gap-2">
+            <span className={LABEL_CLASS}>New cards per session</span>
             <input
               type="number"
               min={1}
               max={200}
               value={form.newCardsPerSession}
               onChange={(e) => setForm((f) => ({ ...f, newCardsPerSession: Number(e.target.value) }))}
-              className="border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 rounded-lg px-3 py-2 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className={FIELD_CLASS}
             />
           </label>
 
-          <label className="flex flex-col gap-1.5">
-            <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Max review cards per session</span>
+          <label className="flex flex-col gap-2">
+            <span className={LABEL_CLASS}>Max review cards per session</span>
             <input
               type="number"
               min={1}
               max={500}
               value={form.maxReviewsPerSession}
               onChange={(e) => setForm((f) => ({ ...f, maxReviewsPerSession: Number(e.target.value) }))}
-              className="border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 rounded-lg px-3 py-2 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className={FIELD_CLASS}
             />
           </label>
 
-          <label className="flex items-center justify-between py-1">
-            <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Randomize new card order</span>
-            <button
-              type="button"
-              role="switch"
-              aria-checked={form.shuffleNewCards}
-              onClick={() => setForm((f) => ({ ...f, shuffleNewCards: !f.shuffleNewCards }))}
-              className={`relative w-11 h-6 rounded-full transition-colors ${
-                form.shuffleNewCards ? 'bg-indigo-600' : 'bg-slate-300 dark:bg-slate-600'
-              }`}
-            >
-              <span
-                className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
-                  form.shuffleNewCards ? 'translate-x-5' : ''
-                }`}
-              />
-            </button>
-          </label>
+          <Toggle
+            label="Randomize new card order"
+            checked={form.shuffleNewCards}
+            onChange={() => setForm((f) => ({ ...f, shuffleNewCards: !f.shuffleNewCards }))}
+          />
 
-          <label className="flex flex-col gap-1.5">
-            <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Audio playback speed</span>
+          <label className="flex flex-col gap-2">
+            <span className={LABEL_CLASS}>Audio playback speed</span>
             <select
               value={form.audioPlaybackRate}
               onChange={(e) => setForm((f) => ({ ...f, audioPlaybackRate: Number(e.target.value) }))}
-              className="border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-slate-800 dark:text-slate-100 bg-white dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className={FIELD_CLASS}
             >
               <option value={0.5}>0.5× (very slow)</option>
               <option value={0.75}>0.75× (slow)</option>
@@ -171,52 +125,61 @@ export function SettingsModal({ settings, onSave, onThemeChange, onClose }: Prop
             </select>
           </label>
 
-          <label className="flex items-center justify-between py-1">
-            <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Autoplay audio</span>
-            <button
-              type="button"
-              role="switch"
-              aria-checked={form.autoplayAudio}
-              onClick={() => setForm((f) => ({ ...f, autoplayAudio: !f.autoplayAudio }))}
-              className={`relative w-11 h-6 rounded-full transition-colors ${
-                form.autoplayAudio ? 'bg-indigo-600' : 'bg-slate-300 dark:bg-slate-600'
-              }`}
-            >
-              <span
-                className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
-                  form.autoplayAudio ? 'translate-x-5' : ''
-                }`}
-              />
-            </button>
-          </label>
+          <Toggle
+            label="Autoplay audio"
+            checked={form.autoplayAudio}
+            onChange={() => setForm((f) => ({ ...f, autoplayAudio: !f.autoplayAudio }))}
+          />
 
-          <label className="flex items-center justify-between py-1">
-            <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Show examples by default</span>
-            <button
-              type="button"
-              role="switch"
-              aria-checked={form.showExamplesByDefault}
-              onClick={() => setForm((f) => ({ ...f, showExamplesByDefault: !f.showExamplesByDefault }))}
-              className={`relative w-11 h-6 rounded-full transition-colors ${
-                form.showExamplesByDefault ? 'bg-indigo-600' : 'bg-slate-300 dark:bg-slate-600'
-              }`}
-            >
-              <span
-                className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
-                  form.showExamplesByDefault ? 'translate-x-5' : ''
-                }`}
-              />
-            </button>
-          </label>
+          <Toggle
+            label="Show examples by default"
+            checked={form.showExamplesByDefault}
+            onChange={() => setForm((f) => ({ ...f, showExamplesByDefault: !f.showExamplesByDefault }))}
+          />
 
           <button
             type="submit"
-            className="w-full py-3 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 active:bg-indigo-800 transition-colors"
+            className="mt-1 w-full rounded-card border-2 border-vermilion bg-vermilion py-3.5 font-display text-base font-bold tracking-tight text-cream-paper transition-colors hover:border-vermilion-dark hover:bg-vermilion-dark"
           >
-            Save
+            Save changes
           </button>
         </form>
       </div>
     </div>
+  )
+}
+
+function Toggle({
+  label,
+  checked,
+  onChange,
+}: {
+  label: string
+  checked: boolean
+  onChange: () => void
+}) {
+  return (
+    <label className="flex items-center justify-between gap-4 py-0.5">
+      <span className="text-sm font-medium text-ink dark:text-cream">{label}</span>
+      <button
+        type="button"
+        role="switch"
+        aria-checked={checked}
+        onClick={onChange}
+        className={`relative h-7 w-12 flex-shrink-0 rounded-full border-2 transition-colors ${
+          checked
+            ? 'border-vermilion bg-vermilion'
+            : 'border-ink/15 bg-transparent dark:border-cream/20'
+        }`}
+      >
+        <span
+          className={`absolute left-0.5 top-0.5 h-5 w-5 rounded-full transition-transform ${
+            checked
+              ? 'translate-x-5 bg-cream-paper'
+              : 'bg-ink/30 dark:bg-cream/40'
+          }`}
+        />
+      </button>
+    </label>
   )
 }
