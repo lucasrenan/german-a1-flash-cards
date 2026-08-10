@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { Card, Rating, SessionStats, Settings } from '../types'
 import { AnswerButtons } from './AnswerButtons'
 import { FlashCard } from './FlashCard'
@@ -13,6 +13,13 @@ interface Props {
   stats: SessionStats
 }
 
+const RATING_KEYS: Record<string, Rating> = {
+  '1': 'again',
+  '2': 'hard',
+  '3': 'good',
+  '4': 'easy',
+}
+
 export function SessionScreen({ queue, cardMap, settings, onRate, onExit, stats }: Props) {
   const [isRevealed, setIsRevealed] = useState(false)
 
@@ -23,12 +30,45 @@ export function SessionScreen({ queue, cardMap, settings, onRate, onExit, stats 
   const currentId = queue[0]
   const card = currentId ? cardMap.get(currentId) : undefined
 
-  if (!card) return null
-
   function handleRate(rating: Rating) {
+    if (!card) return
     setIsRevealed(false)
-    onRate(card!.id, rating)
+    onRate(card.id, rating)
   }
+
+  function handleKeyDown(e: KeyboardEvent) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return
+
+    if (e.key === ' ' || e.key === 'Enter') {
+      // Space and Enter belong to whatever control has focus — the card and the
+      // answer buttons already handle their own activation.
+      const target = e.target as HTMLElement | null
+      if (target?.closest('button, [role="button"], input, textarea, select')) return
+      e.preventDefault()
+      setIsRevealed((v) => !v)
+      return
+    }
+
+    const rating = RATING_KEYS[e.key]
+    if (rating && isRevealed) {
+      e.preventDefault()
+      handleRate(rating)
+    }
+  }
+
+  // Held in a ref so the listener subscribes once yet never rates a stale card.
+  const handlerRef = useRef(handleKeyDown)
+  useEffect(() => {
+    handlerRef.current = handleKeyDown
+  })
+
+  useEffect(() => {
+    const listener = (e: KeyboardEvent) => handlerRef.current(e)
+    window.addEventListener('keydown', listener)
+    return () => window.removeEventListener('keydown', listener)
+  }, [])
+
+  if (!card) return null
 
   return (
     <div className="flex min-h-0 flex-col gap-5 py-6">

@@ -197,6 +197,9 @@ export function FlashCard({
         >
           <FlipIcon className="h-3.5 w-3.5" />
           Flip back
+          <span aria-hidden="true" className="hidden opacity-60 [@media(pointer:fine)]:inline">
+            · Space
+          </span>
         </button>
       ) : (
         <button
@@ -204,6 +207,9 @@ export function FlashCard({
           className="mt-2 w-full rounded-card border-2 border-vermilion bg-vermilion py-4 font-display text-base font-bold tracking-tight text-cream-paper transition-colors hover:border-vermilion-dark hover:bg-vermilion-dark"
         >
           Flip the card
+          <span aria-hidden="true" className="hidden opacity-70 [@media(pointer:fine)]:inline">
+            {' · Space'}
+          </span>
         </button>
       )}
     </div>
