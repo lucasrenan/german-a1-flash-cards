@@ -72,11 +72,11 @@ export function FlashCard({
         {/* Deck underneath: two layers peeking out below the active card. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 translate-y-[14px] scale-[0.94] rounded-card border-2 border-ink/10 bg-cream-paper opacity-50 dark:border-cream/10 dark:bg-ink-soft"
+          className="absolute inset-0 translate-y-[14px] scale-[0.94] rounded-card border-2 border-slate-200 bg-white opacity-50 dark:border-slate-800 dark:bg-slate-800"
         />
         <div
           aria-hidden="true"
-          className="absolute inset-0 translate-y-[7px] scale-[0.97] rounded-card border-2 border-ink/10 bg-cream-paper opacity-80 dark:border-cream/10 dark:bg-ink-soft"
+          className="absolute inset-0 translate-y-[7px] scale-[0.97] rounded-card border-2 border-slate-200 bg-white opacity-80 dark:border-slate-800 dark:bg-slate-800"
         />
 
         <div
@@ -91,12 +91,12 @@ export function FlashCard({
             {/* Front — German, on paper */}
             <div
               aria-hidden={isRevealed}
-              className="card-face [grid-area:1/1] flex flex-col rounded-card border-2 border-ink/10 bg-cream-paper p-6 dark:border-cream/15 dark:bg-ink-soft"
+              className="card-face [grid-area:1/1] flex flex-col rounded-card border-2 border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-800"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0 flex-1">
-                  <p className="text-eyebrow uppercase text-vermilion">Deutsch</p>
-                  <p className="mt-3 break-words font-display text-word font-bold text-ink dark:text-cream">
+                  <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">Deutsch</p>
+                  <p className="mt-3 break-words text-4xl tracking-tight font-bold text-slate-800 dark:text-slate-100">
                     {card.deWord}
                   </p>
                 </div>
@@ -105,7 +105,6 @@ export function FlashCard({
                   stopPropagation={stopPropagation}
                   isPlaying={isPlaying}
                   tabIndex={isRevealed ? -1 : undefined}
-                  tone="front"
                 />
               </div>
 
@@ -116,10 +115,9 @@ export function FlashCard({
                     onToggle={() => setShowFrontExample((v) => !v)}
                     stopPropagation={stopPropagation}
                     tabIndex={isRevealed ? -1 : undefined}
-                    tone="front"
                   />
                   {showFrontExample && (
-                    <p className="mt-2 text-sm leading-relaxed text-ink/70 dark:text-cream/70">
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
                       {card.deSentence}
                     </p>
                   )}
@@ -127,16 +125,16 @@ export function FlashCard({
               )}
             </div>
 
-            {/* Back — English, on ink. Crossing to the answer flips the color scheme.
-                The German stays in view above it: the pairing is what gets memorized. */}
+            {/* Back — English. The German stays in view above it: the pairing
+                is what gets memorized. */}
             <div
               aria-hidden={!isRevealed}
-              className="card-face card-face-back [grid-area:1/1] flex flex-col rounded-card border-2 border-ink bg-ink p-6 dark:border-dandelion/35"
+              className="card-face card-face-back [grid-area:1/1] flex flex-col rounded-card border-2 border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-800"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0 flex-1">
-                  <p className="text-eyebrow uppercase text-dandelion/60">Deutsch</p>
-                  <p className="mt-1.5 break-words font-display text-xl font-bold text-cream/80">
+                  <p className="text-xs font-semibold tracking-widest uppercase text-slate-400 dark:text-slate-500">Deutsch</p>
+                  <p className="mt-1.5 break-words text-xl font-bold text-slate-500 dark:text-slate-400">
                     {card.deWord}
                   </p>
                 </div>
@@ -145,20 +143,19 @@ export function FlashCard({
                   stopPropagation={stopPropagation}
                   isPlaying={isPlaying}
                   tabIndex={isRevealed ? undefined : -1}
-                  tone="back"
                 />
               </div>
 
-              <div aria-hidden="true" className="my-5 h-px bg-cream/15" />
+              <div aria-hidden="true" className="my-5 h-px bg-slate-200 dark:bg-slate-700" />
 
               <div>
-                <p className="text-eyebrow uppercase text-dandelion">English</p>
-                <p className="mt-2 break-words font-display text-word font-bold text-cream">
+                <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">English</p>
+                <p className="mt-2 break-words text-4xl tracking-tight font-bold text-slate-800 dark:text-slate-100">
                   {card.enWord}
                 </p>
 
                 {card.enNote && (
-                  <span className="mt-3 inline-block rounded-card border border-dandelion/40 bg-dandelion/15 px-2.5 py-1 text-xs font-medium text-dandelion">
+                  <span className="mt-3 inline-block rounded-card border border-slate-200 bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-500 dark:border-slate-700 dark:bg-slate-700/50 dark:text-slate-300">
                     {card.enNote}
                   </span>
                 )}
@@ -171,15 +168,14 @@ export function FlashCard({
                     onToggle={() => setShowBackExample((v) => !v)}
                     stopPropagation={stopPropagation}
                     tabIndex={isRevealed ? undefined : -1}
-                    tone="back"
                   />
                   {showBackExample && (
                     <div className="mt-2 space-y-1">
                       {card.deSentence && (
-                        <p className="text-sm leading-relaxed text-cream/60">{card.deSentence}</p>
+                        <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400">{card.deSentence}</p>
                       )}
                       {card.enSentence && (
-                        <p className="text-sm leading-relaxed text-cream/80">{card.enSentence}</p>
+                        <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">{card.enSentence}</p>
                       )}
                     </div>
                   )}
@@ -193,7 +189,7 @@ export function FlashCard({
       {isRevealed ? (
         <button
           onClick={onToggleReveal}
-          className="mx-auto flex items-center gap-1.5 text-eyebrow uppercase text-ink/50 transition-colors hover:text-vermilion dark:text-cream/50 dark:hover:text-vermilion"
+          className="mx-auto flex items-center gap-1.5 text-xs font-semibold tracking-widest uppercase text-slate-500 transition-colors hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400"
         >
           <FlipIcon className="h-3.5 w-3.5" />
           Flip back
@@ -204,7 +200,7 @@ export function FlashCard({
       ) : (
         <button
           onClick={onToggleReveal}
-          className="mt-2 w-full rounded-card border-2 border-vermilion bg-vermilion py-4 font-display text-base font-bold tracking-tight text-cream-paper transition-colors hover:border-vermilion-dark hover:bg-vermilion-dark"
+          className="mt-2 w-full rounded-card border-2 border-indigo-600 bg-indigo-600 py-4 text-base font-bold tracking-tight text-white transition-colors hover:border-indigo-700 hover:bg-indigo-700"
         >
           Flip the card
           <span aria-hidden="true" className="hidden opacity-70 [@media(pointer:fine)]:inline">
@@ -221,22 +217,15 @@ function SpeakerButton({
   stopPropagation,
   isPlaying,
   tabIndex,
-  tone,
 }: {
   onClick: () => void
   stopPropagation: (e: React.MouseEvent) => void
   isPlaying: boolean
   tabIndex?: number
-  tone: 'front' | 'back'
 }) {
   const idle =
-    tone === 'front'
-      ? 'border-ink/10 text-ink hover:border-vermilion hover:text-vermilion dark:border-cream/15 dark:text-cream dark:hover:border-vermilion dark:hover:text-vermilion'
-      : 'border-cream/20 text-cream/70 hover:border-dandelion hover:text-dandelion'
-  const playing =
-    tone === 'front'
-      ? 'border-vermilion bg-vermilion text-cream-paper'
-      : 'border-dandelion bg-dandelion text-ink'
+    'border-slate-200 text-slate-800 hover:border-indigo-600 hover:text-indigo-600 dark:border-slate-700 dark:text-slate-100 dark:hover:border-indigo-500 dark:hover:text-indigo-400'
+  const playing = 'border-indigo-600 bg-indigo-600 text-white'
 
   return (
     <button
@@ -260,13 +249,11 @@ function Disclosure({
   onToggle,
   stopPropagation,
   tabIndex,
-  tone,
 }: {
   isOpen: boolean
   onToggle: () => void
   stopPropagation: (e: React.MouseEvent) => void
   tabIndex?: number
-  tone: 'front' | 'back'
 }) {
   return (
     <button
@@ -276,11 +263,7 @@ function Disclosure({
       }}
       tabIndex={tabIndex}
       aria-expanded={isOpen}
-      className={`flex items-center gap-1 text-eyebrow uppercase transition-colors ${
-        tone === 'front'
-          ? 'text-vermilion hover:text-vermilion-dark'
-          : 'text-dandelion hover:text-dandelion/80'
-      }`}
+      className="flex items-center gap-1 text-xs font-semibold tracking-widest uppercase text-indigo-600 transition-colors hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300"
     >
       <ChevronRightIcon
         className={`h-3.5 w-3.5 transition-transform ${isOpen ? 'rotate-90' : ''}`}

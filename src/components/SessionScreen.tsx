@@ -77,19 +77,19 @@ export function SessionScreen({ queue, cardMap, settings, onRate, onExit, stats 
         <button
           onClick={onExit}
           aria-label="End session"
-          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-card border-2 border-ink/10 text-ink transition-colors hover:border-vermilion hover:text-vermilion dark:border-cream/15 dark:text-cream dark:hover:border-vermilion dark:hover:text-vermilion"
+          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-card border-2 border-slate-200 text-slate-800 transition-colors hover:border-indigo-600 hover:text-indigo-600 dark:border-slate-700 dark:text-slate-100 dark:hover:border-indigo-500 dark:hover:text-indigo-400"
         >
           <CloseIcon className="h-4 w-4" />
         </button>
 
         <div className="flex-1">
-          <div className="mb-2 flex justify-between text-eyebrow uppercase text-ink/50 dark:text-cream/50">
+          <div className="mb-2 flex justify-between text-xs font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400">
             <span>{done} done</span>
             <span>{queue.length} left</span>
           </div>
-          <div className="h-[6px] w-full bg-ink/10 dark:bg-cream/15">
+          <div className="h-[6px] w-full bg-slate-200 dark:bg-slate-800">
             <div
-              className="h-full bg-vermilion transition-all duration-300 ease-card"
+              className="h-full bg-indigo-600 transition-all duration-300 ease-card"
               style={{ width: `${progress}%` }}
             />
           </div>

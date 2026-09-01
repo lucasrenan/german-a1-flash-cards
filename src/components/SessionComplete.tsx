@@ -14,10 +14,10 @@ function verdict(pct: number): { de: string; en: string } {
 }
 
 const BREAKDOWN: { key: keyof Omit<SessionStats, 'total'>; label: string; bar: string }[] = [
-  { key: 'again', label: 'Again', bar: 'bg-brick dark:bg-brick-light' },
-  { key: 'hard', label: 'Hard', bar: 'bg-vermilion' },
-  { key: 'good', label: 'Good', bar: 'bg-moss dark:bg-moss-light' },
-  { key: 'easy', label: 'Easy', bar: 'bg-dandelion' },
+  { key: 'again', label: 'Again', bar: 'bg-red-600 dark:bg-red-500' },
+  { key: 'hard', label: 'Hard', bar: 'bg-orange-500 dark:bg-orange-400' },
+  { key: 'good', label: 'Good', bar: 'bg-green-600 dark:bg-green-500' },
+  { key: 'easy', label: 'Easy', bar: 'bg-blue-600 dark:bg-blue-500' },
 ]
 
 export function SessionComplete({ stats, onHome, onStudyAgain }: Props) {
@@ -28,12 +28,12 @@ export function SessionComplete({ stats, onHome, onStudyAgain }: Props) {
   return (
     <div className="flex flex-col gap-8 py-10">
       <div>
-        <p className="text-eyebrow uppercase text-vermilion">Session complete</p>
-        <h2 className="mt-3 font-display text-4xl font-bold tracking-tight text-ink dark:text-cream">
+        <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">Session complete</p>
+        <h2 className="mt-3 text-4xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
           {de}
         </h2>
-        <p className="mt-3 text-ink/60 dark:text-cream/60">{en}</p>
-        <p className="mt-5 text-sm text-ink/50 dark:text-cream/50">
+        <p className="mt-3 text-slate-500 dark:text-slate-400">{en}</p>
+        <p className="mt-5 text-sm text-slate-500 dark:text-slate-400">
           {stats.total} cards reviewed · {pct}% recalled
         </p>
       </div>
@@ -42,14 +42,14 @@ export function SessionComplete({ stats, onHome, onStudyAgain }: Props) {
         {BREAKDOWN.map(({ key, label, bar }) => (
           <div
             key={key}
-            className="overflow-hidden rounded-card border-2 border-ink/10 bg-cream-paper dark:border-cream/15 dark:bg-ink-soft"
+            className="overflow-hidden rounded-card border-2 border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800"
           >
             <div className={`h-1.5 ${bar}`} />
             <div className="p-4">
-              <p className="font-display text-2xl font-bold tracking-tight text-ink dark:text-cream">
+              <p className="text-2xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
                 {stats[key]}
               </p>
-              <p className="mt-1.5 text-eyebrow uppercase text-ink/50 dark:text-cream/50">
+              <p className="mt-1.5 text-xs font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400">
                 {label}
               </p>
             </div>
@@ -60,13 +60,13 @@ export function SessionComplete({ stats, onHome, onStudyAgain }: Props) {
       <div className="flex flex-col gap-2">
         <button
           onClick={onStudyAgain}
-          className="w-full rounded-card border-2 border-vermilion bg-vermilion py-4 font-display text-base font-bold tracking-tight text-cream-paper transition-colors hover:border-vermilion-dark hover:bg-vermilion-dark"
+          className="w-full rounded-card border-2 border-indigo-600 bg-indigo-600 py-4 text-base font-bold tracking-tight text-white transition-colors hover:border-indigo-700 hover:bg-indigo-700"
         >
           Study again
         </button>
         <button
           onClick={onHome}
-          className="w-full rounded-card border-2 border-ink/10 bg-cream-paper py-4 font-display text-base font-semibold tracking-tight text-ink transition-colors hover:border-ink/30 dark:border-cream/15 dark:bg-ink-soft dark:text-cream dark:hover:border-cream/35"
+          className="w-full rounded-card border-2 border-slate-200 bg-white py-4 text-base font-semibold tracking-tight text-slate-800 transition-colors hover:border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-slate-600"
         >
           Back to home
         </button>

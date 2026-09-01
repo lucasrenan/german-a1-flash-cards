@@ -42,9 +42,9 @@ export function HomeScreen({
   const canStart = sessionSize > 0
 
   const stats = [
-    { label: 'New', value: summary.newCount, color: 'text-vermilion' },
-    { label: 'Due', value: summary.dueCount, color: 'text-brick dark:text-brick-light' },
-    { label: 'Learning', value: summary.learningCount, color: 'text-moss dark:text-moss-light' },
+    { label: 'New', value: summary.newCount, color: 'text-indigo-600 dark:text-indigo-400' },
+    { label: 'Due', value: summary.dueCount, color: 'text-orange-500 dark:text-orange-400' },
+    { label: 'Learning', value: summary.learningCount, color: 'text-green-600 dark:text-green-400' },
   ]
 
   return (
@@ -52,15 +52,15 @@ export function HomeScreen({
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-eyebrow uppercase text-vermilion">Deutsch — Goethe A1</p>
-          <h1 className="mt-2 font-display text-4xl font-bold tracking-tight text-ink dark:text-cream">
+          <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">Deutsch — Goethe A1</p>
+          <h1 className="mt-2 text-4xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
             Flash cards
           </h1>
         </div>
         <button
           onClick={onOpenSettings}
           aria-label="Settings"
-          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-card border-2 border-ink/10 text-ink transition-colors hover:border-vermilion hover:text-vermilion dark:border-cream/15 dark:text-cream dark:hover:border-vermilion dark:hover:text-vermilion"
+          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-card border-2 border-slate-200 text-slate-800 transition-colors hover:border-indigo-600 hover:text-indigo-600 dark:border-slate-700 dark:text-slate-100 dark:hover:border-indigo-500 dark:hover:text-indigo-400"
         >
           <SlidersIcon />
         </button>
@@ -71,17 +71,17 @@ export function HomeScreen({
         {stats.map(({ label, value, color }) => (
           <div
             key={label}
-            className="rounded-card border-2 border-ink/10 bg-cream-paper p-4 dark:border-cream/15 dark:bg-ink-soft"
+            className="rounded-card border-2 border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800"
           >
-            <p className={`font-display text-3xl font-bold tracking-tight ${color}`}>{value}</p>
-            <p className="mt-1.5 text-eyebrow uppercase text-ink/50 dark:text-cream/50">{label}</p>
+            <p className={`text-3xl font-bold tracking-tight ${color}`}>{value}</p>
+            <p className="mt-1.5 text-xs font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400">{label}</p>
           </div>
         ))}
       </div>
 
       {/* Filter tabs */}
       <div>
-        <p className="mb-3 text-eyebrow uppercase text-ink/50 dark:text-cream/50">What to study</p>
+        <p className="mb-3 text-xs font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400">What to study</p>
         <div className="grid grid-cols-4 gap-2">
           {FILTERS.map(({ mode, label, key }) => {
             const count = key ? summary[key] : null
@@ -93,11 +93,11 @@ export function HomeScreen({
                 aria-pressed={isActive}
                 className={`flex flex-col items-center rounded-card border-2 px-1 py-2.5 transition-colors ${
                   isActive
-                    ? 'border-ink bg-ink text-cream dark:border-cream dark:bg-cream dark:text-ink'
-                    : 'border-ink/10 bg-cream-paper text-ink hover:border-ink/30 dark:border-cream/15 dark:bg-ink-soft dark:text-cream dark:hover:border-cream/35'
+                    ? 'border-indigo-600 bg-indigo-600 text-white'
+                    : 'border-slate-200 bg-white text-slate-800 hover:border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-slate-600'
                 }`}
               >
-                <span className="font-display text-sm font-semibold tracking-tight">{label}</span>
+                <span className="text-sm font-semibold tracking-tight">{label}</span>
                 {count !== null && (
                   <span className={`mt-0.5 text-xs ${isActive ? 'opacity-60' : 'opacity-50'}`}>
                     {count}
@@ -113,10 +113,10 @@ export function HomeScreen({
       <button
         onClick={onStart}
         disabled={!canStart}
-        className={`w-full rounded-card border-2 py-4 font-display text-base font-bold tracking-tight transition-colors ${
+        className={`w-full rounded-card border-2 py-4 text-base font-bold tracking-tight transition-colors ${
           canStart
-            ? 'border-vermilion bg-vermilion text-cream-paper hover:border-vermilion-dark hover:bg-vermilion-dark'
-            : 'cursor-not-allowed border-ink/10 bg-transparent text-ink/35 dark:border-cream/15 dark:text-cream/35'
+            ? 'border-indigo-600 bg-indigo-600 text-white hover:border-indigo-700 hover:bg-indigo-700'
+            : 'cursor-not-allowed border-slate-200 bg-transparent text-slate-400 dark:border-slate-700 dark:text-slate-500'
         }`}
       >
         {canStart ? `Start session · ${sessionSize} cards` : 'Nothing to study'}
@@ -125,7 +125,7 @@ export function HomeScreen({
       <div className="grid grid-cols-2 gap-2">
         <button
           onClick={onBrowseWords}
-          className="flex items-center justify-center gap-2 rounded-card border-2 border-ink/10 bg-cream-paper py-3 text-sm font-medium text-ink transition-colors hover:border-ink/30 dark:border-cream/15 dark:bg-ink-soft dark:text-cream dark:hover:border-cream/35"
+          className="flex items-center justify-center gap-2 rounded-card border-2 border-slate-200 bg-white py-3 text-sm font-medium text-slate-800 transition-colors hover:border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-slate-600"
         >
           <ListIcon className="h-4 w-4" />
           Browse words
@@ -133,14 +133,14 @@ export function HomeScreen({
 
         <button
           onClick={onBrowseVerbs}
-          className="flex items-center justify-center gap-2 rounded-card border-2 border-ink/10 bg-cream-paper py-3 text-sm font-medium text-ink transition-colors hover:border-ink/30 dark:border-cream/15 dark:bg-ink-soft dark:text-cream dark:hover:border-cream/35"
+          className="flex items-center justify-center gap-2 rounded-card border-2 border-slate-200 bg-white py-3 text-sm font-medium text-slate-800 transition-colors hover:border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-slate-600"
         >
           <ConjugationIcon className="h-4 w-4" />
           Verb tables
         </button>
       </div>
 
-      <p className="text-center text-xs text-ink/40 dark:text-cream/40">
+      <p className="text-center text-xs text-slate-400 dark:text-slate-500">
         {summary.total} cards in the deck
       </p>
     </div>

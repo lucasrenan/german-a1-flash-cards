@@ -16,9 +16,9 @@ const THEME_OPTIONS: { value: ThemePreference; label: string; icon: ReactNode }[
 ]
 
 const FIELD_CLASS =
-  'rounded-card border-2 border-ink/10 bg-cream-paper px-3 py-2.5 text-ink transition-colors hover:border-ink/30 focus:border-vermilion focus:outline-none dark:border-cream/15 dark:bg-ink dark:text-cream dark:hover:border-cream/35 dark:focus:border-vermilion'
+  'rounded-card border-2 border-slate-200 bg-white px-3 py-2.5 text-slate-800 transition-colors hover:border-slate-300 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:hover:border-slate-600 dark:focus:border-indigo-500'
 
-const LABEL_CLASS = 'text-eyebrow uppercase text-ink/50 dark:text-cream/50'
+const LABEL_CLASS = 'text-xs font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400'
 
 export function SettingsModal({ settings, onSave, onThemeChange, onClose }: Props) {
   const [form, setForm] = useState<Settings>(settings)
@@ -35,19 +35,19 @@ export function SettingsModal({ settings, onSave, onThemeChange, onClose }: Prop
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/50 p-4 sm:items-center dark:bg-ink/70">
-      <div className="max-h-[90vh] w-full max-w-sm overflow-y-auto rounded-card border-2 border-ink bg-cream p-6 dark:border-cream/20 dark:bg-ink-soft">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-slate-900/50 p-4 sm:items-center dark:bg-slate-950/70">
+      <div className="max-h-[90vh] w-full max-w-sm overflow-y-auto rounded-card border-2 border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-800">
         <div className="mb-7 flex items-start justify-between gap-4">
           <div>
-            <p className="text-eyebrow uppercase text-vermilion">Preferences</p>
-            <h2 className="mt-2 font-display text-2xl font-bold tracking-tight text-ink dark:text-cream">
+            <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">Preferences</p>
+            <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
               Settings
             </h2>
           </div>
           <button
             onClick={onClose}
             aria-label="Close settings"
-            className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-card border-2 border-ink/10 text-ink transition-colors hover:border-vermilion hover:text-vermilion dark:border-cream/15 dark:text-cream dark:hover:border-vermilion dark:hover:text-vermilion"
+            className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-card border-2 border-slate-200 text-slate-800 transition-colors hover:border-indigo-600 hover:text-indigo-600 dark:border-slate-700 dark:text-slate-100 dark:hover:border-indigo-500 dark:hover:text-indigo-400"
           >
             <CloseIcon className="h-4 w-4" />
           </button>
@@ -68,8 +68,8 @@ export function SettingsModal({ settings, onSave, onThemeChange, onClose }: Prop
                     onClick={() => handleThemeChange(value)}
                     className={`flex flex-col items-center justify-center gap-1.5 rounded-card border-2 py-3 text-sm font-medium transition-colors ${
                       isActive
-                        ? 'border-ink bg-ink text-cream dark:border-cream dark:bg-cream dark:text-ink'
-                        : 'border-ink/10 bg-cream-paper text-ink hover:border-ink/30 dark:border-cream/15 dark:bg-ink dark:text-cream dark:hover:border-cream/35'
+                        ? 'border-indigo-600 bg-indigo-600 text-white'
+                        : 'border-slate-200 bg-white text-slate-800 hover:border-slate-300 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:hover:border-slate-600'
                     }`}
                   >
                     {icon}
@@ -139,7 +139,7 @@ export function SettingsModal({ settings, onSave, onThemeChange, onClose }: Prop
 
           <button
             type="submit"
-            className="mt-1 w-full rounded-card border-2 border-vermilion bg-vermilion py-3.5 font-display text-base font-bold tracking-tight text-cream-paper transition-colors hover:border-vermilion-dark hover:bg-vermilion-dark"
+            className="mt-1 w-full rounded-card border-2 border-indigo-600 bg-indigo-600 py-3.5 text-base font-bold tracking-tight text-white transition-colors hover:border-indigo-700 hover:bg-indigo-700"
           >
             Save changes
           </button>
@@ -160,7 +160,7 @@ function Toggle({
 }) {
   return (
     <label className="flex items-center justify-between gap-4 py-0.5">
-      <span className="text-sm font-medium text-ink dark:text-cream">{label}</span>
+      <span className="text-sm font-medium text-slate-800 dark:text-slate-100">{label}</span>
       <button
         type="button"
         role="switch"
@@ -168,15 +168,15 @@ function Toggle({
         onClick={onChange}
         className={`relative h-7 w-12 flex-shrink-0 rounded-full border-2 transition-colors ${
           checked
-            ? 'border-vermilion bg-vermilion'
-            : 'border-ink/15 bg-transparent dark:border-cream/20'
+            ? 'border-indigo-600 bg-indigo-600'
+            : 'border-slate-200 bg-transparent dark:border-slate-700'
         }`}
       >
         <span
           className={`absolute left-0.5 top-0.5 h-5 w-5 rounded-full transition-transform ${
             checked
-              ? 'translate-x-5 bg-cream-paper'
-              : 'bg-ink/30 dark:bg-cream/40'
+              ? 'translate-x-5 bg-white'
+              : 'bg-slate-300 dark:bg-slate-500'
           }`}
         />
       </button>

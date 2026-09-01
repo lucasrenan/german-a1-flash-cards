@@ -6,7 +6,7 @@ interface Props {
 
 /**
  * Ratings run cold to warm across the semantic palette:
- * brick (again) · vermilion (hard) · moss (good) · dandelion (easy).
+ * red (again) · orange (hard) · green (good) · blue (easy).
  */
 const BUTTONS: {
   rating: Rating
@@ -21,7 +21,7 @@ const BUTTONS: {
     sublabel: '<1d',
     key: '1',
     className:
-      'bg-brick-soft border-brick text-brick hover:bg-brick hover:text-cream-paper dark:bg-transparent dark:border-brick-light dark:text-brick-light dark:hover:bg-brick-light dark:hover:text-ink',
+      'bg-red-50 border-red-600 text-red-600 hover:bg-red-700 hover:text-white dark:bg-transparent dark:border-red-500 dark:text-red-400 dark:hover:bg-red-400 dark:hover:text-slate-900',
   },
   {
     rating: 'hard',
@@ -29,7 +29,7 @@ const BUTTONS: {
     sublabel: '~1d',
     key: '2',
     className:
-      'bg-vermilion-soft border-vermilion text-vermilion-dark hover:bg-vermilion hover:text-cream-paper dark:bg-transparent dark:border-vermilion dark:text-vermilion dark:hover:bg-vermilion dark:hover:text-ink',
+      'bg-orange-50 border-orange-500 text-orange-600 hover:bg-orange-600 hover:text-white dark:bg-transparent dark:border-orange-500 dark:text-orange-300 dark:hover:bg-orange-400 dark:hover:text-slate-900',
   },
   {
     rating: 'good',
@@ -37,7 +37,7 @@ const BUTTONS: {
     sublabel: '~3d',
     key: '3',
     className:
-      'bg-moss-soft border-moss text-moss hover:bg-moss hover:text-cream-paper dark:bg-transparent dark:border-moss-light dark:text-moss-light dark:hover:bg-moss-light dark:hover:text-ink',
+      'bg-green-50 border-green-600 text-green-600 hover:bg-green-700 hover:text-white dark:bg-transparent dark:border-green-500 dark:text-green-400 dark:hover:bg-green-400 dark:hover:text-slate-900',
   },
   {
     rating: 'easy',
@@ -45,7 +45,7 @@ const BUTTONS: {
     sublabel: '~7d',
     key: '4',
     className:
-      'bg-dandelion-soft border-dandelion text-ink hover:bg-dandelion hover:text-ink dark:bg-transparent dark:border-dandelion dark:text-dandelion dark:hover:bg-dandelion dark:hover:text-ink',
+      'bg-blue-50 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white dark:bg-transparent dark:border-blue-500 dark:text-blue-300 dark:hover:bg-blue-400 dark:hover:text-slate-900',
   },
 ]
 
@@ -65,7 +65,7 @@ export function AnswerButtons({ onRate }: Props) {
           >
             {key}
           </span>
-          <span className="font-display text-sm font-bold tracking-tight">{label}</span>
+          <span className="text-sm font-bold tracking-tight">{label}</span>
           <span className="mt-0.5 text-xs opacity-70">{sublabel}</span>
         </button>
       ))}

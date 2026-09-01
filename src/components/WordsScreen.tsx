@@ -24,9 +24,9 @@ const BADGE_BASE =
   'rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider whitespace-nowrap'
 
 const STATUS_STYLES: Record<CardState['status'], string> = {
-  new: 'border-ink/20 text-ink/55 dark:border-cream/25 dark:text-cream/55',
-  learning: 'border-vermilion/40 bg-vermilion-soft text-vermilion-dark dark:bg-transparent dark:text-vermilion',
-  review: 'border-moss/40 bg-moss-soft text-moss dark:border-moss-light/50 dark:bg-transparent dark:text-moss-light',
+  new: 'border-slate-300 text-slate-500 dark:border-slate-600 dark:text-slate-400',
+  learning: 'border-orange-200 bg-orange-50 text-orange-600 dark:border-orange-800 dark:bg-transparent dark:text-orange-300',
+  review: 'border-green-200 bg-green-50 text-green-600 dark:border-green-800 dark:bg-transparent dark:text-green-400',
 }
 
 const STATUS_LABELS: Record<CardState['status'], string> = {
@@ -36,10 +36,10 @@ const STATUS_LABELS: Record<CardState['status'], string> = {
 }
 
 const RATING_STYLES: Record<Rating, string> = {
-  again: 'border-brick/40 bg-brick-soft text-brick dark:border-brick-light/50 dark:bg-transparent dark:text-brick-light',
-  hard: 'border-vermilion/40 bg-vermilion-soft text-vermilion-dark dark:bg-transparent dark:text-vermilion',
-  good: 'border-moss/40 bg-moss-soft text-moss dark:border-moss-light/50 dark:bg-transparent dark:text-moss-light',
-  easy: 'border-dandelion bg-dandelion-soft text-ink dark:bg-transparent dark:text-dandelion',
+  again: 'border-red-200 bg-red-50 text-red-600 dark:border-red-800 dark:bg-transparent dark:text-red-400',
+  hard: 'border-orange-200 bg-orange-50 text-orange-600 dark:border-orange-800 dark:bg-transparent dark:text-orange-300',
+  good: 'border-green-200 bg-green-50 text-green-600 dark:border-green-800 dark:bg-transparent dark:text-green-400',
+  easy: 'border-blue-200 bg-blue-50 text-blue-600 dark:border-blue-800 dark:bg-transparent dark:text-blue-300',
 }
 
 const RATING_LABELS: Record<Rating, string> = {
@@ -79,17 +79,17 @@ export function WordsScreen({ cards, cardStates, onBack }: Props) {
         <button
           onClick={onBack}
           aria-label="Back"
-          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-card border-2 border-ink/10 text-ink transition-colors hover:border-vermilion hover:text-vermilion dark:border-cream/15 dark:text-cream dark:hover:border-vermilion dark:hover:text-vermilion"
+          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-card border-2 border-slate-200 text-slate-800 transition-colors hover:border-indigo-600 hover:text-indigo-600 dark:border-slate-700 dark:text-slate-100 dark:hover:border-indigo-500 dark:hover:text-indigo-400"
         >
           <ArrowLeftIcon className="h-4 w-4" />
         </button>
         <div className="flex-1">
-          <p className="text-eyebrow uppercase text-vermilion">Deck</p>
-          <h1 className="mt-1.5 font-display text-2xl font-bold tracking-tight text-ink dark:text-cream">
+          <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">Deck</p>
+          <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
             Words
           </h1>
         </div>
-        <span className="text-sm text-ink/50 dark:text-cream/50">{filtered.length}</span>
+        <span className="text-sm text-slate-500 dark:text-slate-400">{filtered.length}</span>
       </div>
 
       {/* Filters */}
@@ -103,8 +103,8 @@ export function WordsScreen({ cards, cardStates, onBack }: Props) {
               aria-pressed={isActive}
               className={`whitespace-nowrap rounded-card border-2 px-4 py-2 text-sm font-medium transition-colors ${
                 isActive
-                  ? 'border-ink bg-ink text-cream dark:border-cream dark:bg-cream dark:text-ink'
-                  : 'border-ink/10 bg-cream-paper text-ink hover:border-ink/30 dark:border-cream/15 dark:bg-ink-soft dark:text-cream dark:hover:border-cream/35'
+                  ? 'border-indigo-600 bg-indigo-600 text-white'
+                  : 'border-slate-200 bg-white text-slate-800 hover:border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-slate-600'
               }`}
             >
               {label}
@@ -115,21 +115,21 @@ export function WordsScreen({ cards, cardStates, onBack }: Props) {
 
       {/* List */}
       {pageItems.length === 0 ? (
-        <div className="rounded-card border-2 border-dashed border-ink/15 py-14 text-center dark:border-cream/20">
-          <p className="text-eyebrow uppercase text-ink/40 dark:text-cream/40">Nothing here</p>
-          <p className="mt-2 text-sm text-ink/60 dark:text-cream/60">
+        <div className="rounded-card border-2 border-dashed border-slate-200 py-14 text-center dark:border-slate-700">
+          <p className="text-xs font-semibold tracking-widest uppercase text-slate-400 dark:text-slate-500">Nothing here</p>
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
             No cards carry this status yet.
           </p>
         </div>
       ) : (
-        <div className="divide-y-2 divide-ink/10 overflow-hidden rounded-card border-2 border-ink/10 bg-cream-paper dark:divide-cream/10 dark:border-cream/15 dark:bg-ink-soft">
+        <div className="divide-y-2 divide-slate-200 overflow-hidden rounded-card border-2 border-slate-200 bg-white dark:divide-slate-800 dark:border-slate-700 dark:bg-slate-800">
           {pageItems.map(({ card, state }) => (
             <div key={card.id} className="flex items-center gap-3 p-4">
               <div className="min-w-0 flex-1">
-                <p className="truncate font-display font-semibold tracking-tight text-ink dark:text-cream">
+                <p className="truncate font-semibold tracking-tight text-slate-800 dark:text-slate-100">
                   {card.deWord}
                 </p>
-                <p className="truncate text-sm text-ink/55 dark:text-cream/55">{card.enWord}</p>
+                <p className="truncate text-sm text-slate-500 dark:text-slate-400">{card.enWord}</p>
               </div>
               <div className="flex flex-shrink-0 flex-col items-end gap-1.5">
                 <span className={`${BADGE_BASE} ${STATUS_STYLES[state.status]}`}>
@@ -152,18 +152,18 @@ export function WordsScreen({ cards, cardStates, onBack }: Props) {
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={safePage <= 1}
-            className="flex items-center gap-2 rounded-card border-2 border-ink/10 bg-cream-paper px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:border-ink/30 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-ink/10 dark:border-cream/15 dark:bg-ink-soft dark:text-cream dark:hover:border-cream/35 dark:disabled:hover:border-cream/15"
+            className="flex items-center gap-2 rounded-card border-2 border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-800 transition-colors hover:border-slate-300 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-slate-600 dark:disabled:hover:border-slate-700"
           >
             <ArrowLeftIcon className="h-4 w-4" />
             Prev
           </button>
-          <span className="text-eyebrow uppercase text-ink/50 dark:text-cream/50">
+          <span className="text-xs font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400">
             {safePage} / {totalPages}
           </span>
           <button
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={safePage >= totalPages}
-            className="flex items-center gap-2 rounded-card border-2 border-ink/10 bg-cream-paper px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:border-ink/30 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-ink/10 dark:border-cream/15 dark:bg-ink-soft dark:text-cream dark:hover:border-cream/35 dark:disabled:hover:border-cream/15"
+            className="flex items-center gap-2 rounded-card border-2 border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-800 transition-colors hover:border-slate-300 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-slate-600 dark:disabled:hover:border-slate-700"
           >
             Next
             <ArrowRightIcon className="h-4 w-4" />

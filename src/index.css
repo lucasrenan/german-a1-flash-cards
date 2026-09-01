@@ -5,20 +5,20 @@
 @layer base {
   /* Painted on <html> so the page never flashes white before React mounts. */
   html {
-    @apply bg-cream text-ink;
+    @apply bg-slate-50 text-slate-800;
   }
 
   html.dark {
-    @apply bg-ink text-cream;
+    @apply bg-slate-950 text-slate-100;
   }
 
   body {
-    @apply font-body antialiased;
+    @apply antialiased;
   }
 
   /* One visible focus treatment everywhere, in the accent color. */
   :focus-visible {
-    @apply outline-none ring-2 ring-vermilion ring-offset-2 ring-offset-cream dark:ring-offset-ink;
+    @apply outline-none ring-2 ring-indigo-500 ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-950;
   }
 }
 

@@ -18,10 +18,10 @@ const FILTERS: { mode: CategoryFilter; label: string }[] = [
 
 /** One accent per category, so a verb's class is readable at a glance. */
 const CATEGORY_STYLES: Record<VerbCategory, string> = {
-  auxiliary: 'border-dandelion bg-dandelion-soft text-ink dark:bg-transparent dark:text-dandelion',
-  modal: 'border-vermilion/40 bg-vermilion-soft text-vermilion-dark dark:bg-transparent dark:text-vermilion',
-  irregular: 'border-brick/40 bg-brick-soft text-brick dark:border-brick-light/50 dark:bg-transparent dark:text-brick-light',
-  regular: 'border-moss/40 bg-moss-soft text-moss dark:border-moss-light/50 dark:bg-transparent dark:text-moss-light',
+  auxiliary: 'border-purple-200 bg-purple-50 text-purple-600 dark:border-purple-800 dark:bg-transparent dark:text-purple-300',
+  modal: 'border-indigo-200 bg-indigo-50 text-indigo-700 dark:bg-transparent dark:text-indigo-400',
+  irregular: 'border-orange-200 bg-orange-50 text-orange-600 dark:border-orange-800 dark:bg-transparent dark:text-orange-300',
+  regular: 'border-green-200 bg-green-50 text-green-600 dark:border-green-800 dark:bg-transparent dark:text-green-400',
 }
 
 const CATEGORY_LABELS: Record<VerbCategory, string> = {
@@ -62,38 +62,38 @@ export function VerbsScreen({ onBack }: Props) {
         <button
           onClick={onBack}
           aria-label="Back"
-          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-card border-2 border-ink/10 text-ink transition-colors hover:border-vermilion hover:text-vermilion dark:border-cream/15 dark:text-cream dark:hover:border-vermilion dark:hover:text-vermilion"
+          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-card border-2 border-slate-200 text-slate-800 transition-colors hover:border-indigo-600 hover:text-indigo-600 dark:border-slate-700 dark:text-slate-100 dark:hover:border-indigo-500 dark:hover:text-indigo-400"
         >
           <ArrowLeftIcon className="h-4 w-4" />
         </button>
         <div className="flex-1">
-          <p className="text-eyebrow uppercase text-vermilion">Präsens</p>
-          <h1 className="mt-1.5 font-display text-2xl font-bold tracking-tight text-ink dark:text-cream">
+          <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">Präsens</p>
+          <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
             Verbs
           </h1>
         </div>
-        <span className="text-sm text-ink/50 dark:text-cream/50">
+        <span className="text-sm text-slate-500 dark:text-slate-400">
           {filtered.length}/{verbs.length}
         </span>
       </div>
 
       {/* Search */}
       <div className="relative">
-        <SearchIcon className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink/40 dark:text-cream/40" />
+        <SearchIcon className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
         <input
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search verbs…"
           aria-label="Search verbs"
-          className="w-full rounded-card border-2 border-ink/10 bg-cream-paper py-2.5 pl-10 pr-10 text-sm text-ink transition-colors placeholder:text-ink/40 hover:border-ink/30 focus:border-vermilion focus:outline-none dark:border-cream/15 dark:bg-ink-soft dark:text-cream dark:placeholder:text-cream/40 dark:hover:border-cream/35 dark:focus:border-vermilion"
+          className="w-full rounded-card border-2 border-slate-200 bg-white py-2.5 pl-10 pr-10 text-sm text-slate-800 transition-colors placeholder:text-slate-400 hover:border-slate-300 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:hover:border-slate-600 dark:focus:border-indigo-500"
         />
         {query && (
           <button
             type="button"
             onClick={() => setQuery('')}
             aria-label="Clear search"
-            className="absolute right-3 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full text-ink/50 transition-colors hover:text-vermilion dark:text-cream/50 dark:hover:text-vermilion"
+            className="absolute right-3 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full text-slate-500 transition-colors hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400"
           >
             <CloseIcon className="h-4 w-4" />
           </button>
@@ -111,8 +111,8 @@ export function VerbsScreen({ onBack }: Props) {
               aria-pressed={isActive}
               className={`whitespace-nowrap rounded-card border-2 px-4 py-2 text-sm font-medium transition-colors ${
                 isActive
-                  ? 'border-ink bg-ink text-cream dark:border-cream dark:bg-cream dark:text-ink'
-                  : 'border-ink/10 bg-cream-paper text-ink hover:border-ink/30 dark:border-cream/15 dark:bg-ink-soft dark:text-cream dark:hover:border-cream/35'
+                  ? 'border-indigo-600 bg-indigo-600 text-white'
+                  : 'border-slate-200 bg-white text-slate-800 hover:border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-slate-600'
               }`}
             >
               {label}
@@ -123,9 +123,9 @@ export function VerbsScreen({ onBack }: Props) {
 
       {/* Verb cards */}
       {filtered.length === 0 ? (
-        <div className="rounded-card border-2 border-dashed border-ink/15 py-14 text-center dark:border-cream/20">
-          <p className="text-eyebrow uppercase text-ink/40 dark:text-cream/40">No match</p>
-          <p className="mt-2 text-sm text-ink/60 dark:text-cream/60">
+        <div className="rounded-card border-2 border-dashed border-slate-200 py-14 text-center dark:border-slate-700">
+          <p className="text-xs font-semibold tracking-widest uppercase text-slate-400 dark:text-slate-500">No match</p>
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
             Try a different spelling, or clear the filter.
           </p>
         </div>
@@ -144,18 +144,18 @@ function VerbCard({ verb }: { verb: Verb }) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <article className="flex flex-col overflow-hidden rounded-card border-2 border-ink/10 bg-cream-paper dark:border-cream/15 dark:bg-ink-soft">
+    <article className="flex flex-col overflow-hidden rounded-card border-2 border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800">
       <button
         type="button"
         onClick={() => setIsOpen((v) => !v)}
         aria-expanded={isOpen}
-        className="flex items-start justify-between gap-3 p-4 text-left transition-colors hover:bg-ink/5 dark:hover:bg-cream/5"
+        className="flex items-start justify-between gap-3 p-4 text-left transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
       >
         <div className="min-w-0 flex-1">
-          <h2 className="font-display text-lg font-bold leading-tight tracking-tight text-ink dark:text-cream">
+          <h2 className="text-lg font-bold leading-tight tracking-tight text-slate-800 dark:text-slate-100">
             {verb.infinitive}
           </h2>
-          <p className="mt-1 text-sm text-ink/55 dark:text-cream/55">{verb.english}</p>
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{verb.english}</p>
         </div>
         <div className="flex flex-shrink-0 items-center gap-2">
           <span
@@ -164,7 +164,7 @@ function VerbCard({ verb }: { verb: Verb }) {
             {CATEGORY_LABELS[verb.category]}
           </span>
           <ChevronDownIcon
-            className={`h-4 w-4 text-ink/40 transition-transform dark:text-cream/40 ${isOpen ? 'rotate-180' : ''}`}
+            className={`h-4 w-4 text-slate-400 transition-transform dark:text-slate-500 ${isOpen ? 'rotate-180' : ''}`}
           />
         </div>
       </button>
@@ -174,12 +174,12 @@ function VerbCard({ verb }: { verb: Verb }) {
           {/* Conjugation table — the rule after er/sie/es splits singular from plural. */}
           <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm">
             {PRONOUN_LABELS.map(({ key, label }, idx) => {
-              const divider = idx === 3 ? 'mt-1.5 border-t-2 border-ink/10 pt-3 dark:border-cream/10' : ''
+              const divider = idx === 3 ? 'mt-1.5 border-t-2 border-slate-200 pt-3 dark:border-slate-800' : ''
               return (
                 <Fragment key={key}>
-                  <dt className={`text-ink/50 dark:text-cream/50 ${divider}`}>{label}</dt>
+                  <dt className={`text-slate-500 dark:text-slate-400 ${divider}`}>{label}</dt>
                   <dd
-                    className={`font-display font-semibold tracking-tight text-ink dark:text-cream ${divider}`}
+                    className={`font-semibold tracking-tight text-slate-800 dark:text-slate-100 ${divider}`}
                   >
                     {verb.conjugation[key]}
                   </dd>
@@ -189,9 +189,9 @@ function VerbCard({ verb }: { verb: Verb }) {
           </dl>
 
           {/* Example */}
-          <div className="border-t-2 border-ink/10 pt-3 dark:border-cream/10">
-            <p className="text-sm text-ink dark:text-cream">“{verb.example.de}”</p>
-            <p className="mt-1 text-xs text-ink/50 dark:text-cream/50">{verb.example.en}</p>
+          <div className="border-t-2 border-slate-200 pt-3 dark:border-slate-800">
+            <p className="text-sm text-slate-800 dark:text-slate-100">“{verb.example.de}”</p>
+            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{verb.example.en}</p>
           </div>
         </div>
       )}
