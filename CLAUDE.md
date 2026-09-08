@@ -8,13 +8,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev              # Vite dev server on :5173 (add -- --host to reach it from a phone)
 npm run build            # tsc -b (typecheck) + vite build → dist/
 npm run preview          # serve the production build
+npm run lint             # eslint (src/ only)
+npm run format           # prettier --write .
+npm run format:check     # prettier --check . (no writes)
 npm test                 # vitest watch mode
 npm run test:run         # one-shot run (what CI does)
 npm run test:run -- src/lib/sm2.test.ts          # single file
 npm run test:run -- -t "interleaves new cards"   # single test by name
 ```
 
-Node 22 (`.nvmrc`). There is no linter — `npm run build` is the typecheck gate.
+Node 22 (`.nvmrc`). `npm run build` is the typecheck gate; `npm run lint` and `npm run test:run` are the CI gates.
 
 ## Architecture
 
@@ -42,6 +45,28 @@ Single-page React app, no backend, no router library. Everything the user does p
 
 Vitest + jsdom, `globals: false` — import `describe`/`it`/`expect` from `vitest` explicitly. Tests sit next to their source as `*.test.ts` and cover the `src/lib/` logic plus verb-data integrity; components are untested.
 
+## Lint and formatting
+
+ESLint flat config in `eslint.config.js` (ESM): `js.configs.recommended` + `typescript-eslint`
+recommended + react-hooks + react-refresh, with `eslint-config-prettier` **last** so no rule fights
+Prettier. Only `src/**/*.{ts,tsx}` is linted — `vite.config.ts` and the `*.config.js` files are not.
+
+`eslint-plugin-react-hooks` v7's recommended set is stricter than the classic
+`rules-of-hooks`/`exhaustive-deps` pair: it also errors on render-time ref writes
+(`react-hooks/refs`) and `setState` in an effect body (`react-hooks/set-state-in-effect`). Three
+pre-existing patterns trip it and are suppressed per line with a `--` reason: the latest-value refs
+in `App.tsx`, the session-complete transition effect in `App.tsx`, and the per-card reset effect in
+`FlashCard.tsx`. Fixing any of them for real is a behavior refactor, not a lint fix. `FlashCard.tsx`
+also carries a live `exhaustive-deps` warning (missing `playAudio`) — deliberately left visible;
+warnings don't fail `eslint .`.
+
+Prettier (`.prettierrc`) owns formatting repo-wide: single quotes, no semicolons, trailing commas
+`all`, printWidth 100. Two overrides exist to protect hand-maintained layout, so don't drop them:
+
+- `src/data/verbs.ts` → 140, keeping one `conjugation: { ... }` object per line.
+- `*.html` → 160, keeping one `<meta>` per line so the two entry points stay easy to diff (see
+  Multi-page build above).
+
 ## Deploy
 
-Push to `main` → `.github/workflows/deploy.yml` builds and publishes to GitHub Pages at german-a1.lucasrenan.com (`public/CNAME`).
+Push to `main` → `.github/workflows/deploy.yml` runs `npm run lint` and `npm run test:run`, then builds and publishes to GitHub Pages at german-a1.lucasrenan.com (`public/CNAME`). The `deploy` job `needs: build`, so a lint or test failure blocks `deploy-pages`.
