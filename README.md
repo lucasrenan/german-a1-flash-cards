@@ -117,6 +117,15 @@ blocks the deploy.
 
 To reset all progress, clear your browser's localStorage for the site.
 
+## Ideas / Future Improvements
+
+- **Export/import progress** — download `a1fc_card_states` + `a1fc_settings` as JSON, and reimport. Currently progress only lives in localStorage; clearing browser data or switching devices loses everything.
+- **Streak / daily goal counter** on the home screen to drive study consistency.
+- **Stats/progress view** — cards mastered vs. learning vs. new, review forecast for the next N days (data already tracked per card).
+- **Offline support (PWA)** — add a manifest + service worker (`vite-plugin-pwa`) with cache-first strategy for the deck TSV and audio, so the app works with no/patchy connection (e.g. on the commute).
+- **Deck cache versioning/TTL** — cache key never expires or checks for upstream updates. Add a version suffix or periodic re-fetch instead of relying on manual `clearDeckCache()`.
+- **"Cram before exam" mode** — study a manually chosen subset or historically-hard cards, bypassing SM-2 scheduling.
+
 ## Credits
 
 - **Vocabulary list**: [Anki German A1 Vocab](https://github.com/patsytau/anki_german_a1_vocab) by **patsytau** — based on the Goethe-Institut A1 wordlist (GOETHE-ZERTIFIKAT A1 - START DEUTSCH 1 - WORTLISTE).
