@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { blurAfterPointerClick } from '../lib/focus'
 import type { Card } from '../types'
 import { ChevronRightIcon, FlipIcon, SpeakerIcon } from './icons'
 
@@ -188,7 +189,10 @@ export function FlashCard({
 
       {isRevealed ? (
         <button
-          onClick={onToggleReveal}
+          onClick={(e) => {
+            blurAfterPointerClick(e)
+            onToggleReveal()
+          }}
           className="mx-auto flex items-center gap-1.5 text-xs font-semibold tracking-widest uppercase text-slate-500 transition-colors hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400"
         >
           <FlipIcon className="h-3.5 w-3.5" />
@@ -199,7 +203,10 @@ export function FlashCard({
         </button>
       ) : (
         <button
-          onClick={onToggleReveal}
+          onClick={(e) => {
+            blurAfterPointerClick(e)
+            onToggleReveal()
+          }}
           className="mt-2 w-full rounded-card border-2 border-indigo-600 bg-indigo-600 py-4 text-base font-bold tracking-tight text-white transition-colors hover:border-indigo-700 hover:bg-indigo-700"
         >
           Flip the card
@@ -231,6 +238,7 @@ function SpeakerButton({
     <button
       onClick={(e) => {
         stopPropagation(e)
+        blurAfterPointerClick(e)
         onClick()
       }}
       tabIndex={tabIndex}
@@ -259,6 +267,7 @@ function Disclosure({
     <button
       onClick={(e) => {
         stopPropagation(e)
+        blurAfterPointerClick(e)
         onToggle()
       }}
       tabIndex={tabIndex}

@@ -1,3 +1,4 @@
+import { blurAfterPointerClick } from '../lib/focus'
 import type { Rating } from '../types'
 
 interface Props {
@@ -55,7 +56,10 @@ export function AnswerButtons({ onRate }: Props) {
       {BUTTONS.map(({ rating, label, sublabel, key, className }) => (
         <button
           key={rating}
-          onClick={() => onRate(rating)}
+          onClick={(e) => {
+            blurAfterPointerClick(e)
+            onRate(rating)
+          }}
           className={`relative flex flex-col items-center rounded-card border-2 px-1 py-3 transition-colors ${className}`}
         >
           {/* Shortcut hint only where a keyboard exists. */}
