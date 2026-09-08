@@ -24,6 +24,8 @@ jobs:
           node-version: '22'
           cache: 'npm'
       - run: npm ci
+      - run: npm run lint
+      - run: npm run test:run
       - run: npm run build
       # SPA fallback for GitHub Pages: serve index.html for unknown paths (e.g. /verbs)
       - run: cp dist/index.html dist/404.html

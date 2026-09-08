@@ -94,6 +94,20 @@ npm run test:run  # one-shot (CI)
 
 Test files live next to the code they cover, as `*.test.ts`.
 
+### Lint and format
+
+[ESLint](https://eslint.org/) (flat config in [`eslint.config.js`](./eslint.config.js)) checks `src/`, and
+[Prettier](https://prettier.io/) owns formatting ([`.prettierrc`](./.prettierrc)).
+
+```bash
+npm run lint          # ESLint
+npm run format        # Prettier — rewrite files in place
+npm run format:check  # Prettier — check only, no writes
+```
+
+`npm run lint` and `npm run test:run` both run in CI before the build, so a failure there
+blocks the deploy.
+
 ## How It Works
 
 - **First load**: the app fetches the tab-separated wordlist from [jsDelivr](https://cdn.jsdelivr.net/) (mirroring the Anki deck repo) and caches it in localStorage. Audio files are streamed on demand from the same CDN.

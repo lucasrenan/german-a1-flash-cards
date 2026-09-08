@@ -18,10 +18,13 @@ const FILTERS: { mode: CategoryFilter; label: string }[] = [
 
 /** One accent per category, so a verb's class is readable at a glance. */
 const CATEGORY_STYLES: Record<VerbCategory, string> = {
-  auxiliary: 'border-purple-200 bg-purple-50 text-purple-600 dark:border-purple-800 dark:bg-transparent dark:text-purple-300',
+  auxiliary:
+    'border-purple-200 bg-purple-50 text-purple-600 dark:border-purple-800 dark:bg-transparent dark:text-purple-300',
   modal: 'border-indigo-200 bg-indigo-50 text-indigo-700 dark:bg-transparent dark:text-indigo-400',
-  irregular: 'border-orange-200 bg-orange-50 text-orange-600 dark:border-orange-800 dark:bg-transparent dark:text-orange-300',
-  regular: 'border-green-200 bg-green-50 text-green-600 dark:border-green-800 dark:bg-transparent dark:text-green-400',
+  irregular:
+    'border-orange-200 bg-orange-50 text-orange-600 dark:border-orange-800 dark:bg-transparent dark:text-orange-300',
+  regular:
+    'border-green-200 bg-green-50 text-green-600 dark:border-green-800 dark:bg-transparent dark:text-green-400',
 }
 
 const CATEGORY_LABELS: Record<VerbCategory, string> = {
@@ -67,7 +70,9 @@ export function VerbsScreen({ onBack }: Props) {
           <ArrowLeftIcon className="h-4 w-4" />
         </button>
         <div className="flex-1">
-          <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">Präsens</p>
+          <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">
+            Präsens
+          </p>
           <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
             Verbs
           </h1>
@@ -124,7 +129,9 @@ export function VerbsScreen({ onBack }: Props) {
       {/* Verb cards */}
       {filtered.length === 0 ? (
         <div className="rounded-card border-2 border-dashed border-slate-200 py-14 text-center dark:border-slate-700">
-          <p className="text-xs font-semibold tracking-widest uppercase text-slate-400 dark:text-slate-500">No match</p>
+          <p className="text-xs font-semibold tracking-widest uppercase text-slate-400 dark:text-slate-500">
+            No match
+          </p>
           <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
             Try a different spelling, or clear the filter.
           </p>
@@ -174,7 +181,8 @@ function VerbCard({ verb }: { verb: Verb }) {
           {/* Conjugation table — the rule after er/sie/es splits singular from plural. */}
           <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm">
             {PRONOUN_LABELS.map(({ key, label }, idx) => {
-              const divider = idx === 3 ? 'mt-1.5 border-t-2 border-slate-200 pt-3 dark:border-slate-800' : ''
+              const divider =
+                idx === 3 ? 'mt-1.5 border-t-2 border-slate-200 pt-3 dark:border-slate-800' : ''
               return (
                 <Fragment key={key}>
                   <dt className={`text-slate-500 dark:text-slate-400 ${divider}`}>{label}</dt>

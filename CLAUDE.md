@@ -32,9 +32,9 @@ Single-page React app, no backend, no router library. Everything the user does p
 
 **Session queue — `src/lib/session.ts`.** `buildQueue` partitions cards into new / due-learning / due-review, applies the `FilterMode`, caps by `newCardsPerSession` and `maxReviewsPerSession`, and `interleave`s one new card after every 5 reviews. Note `App.handleRate` mutates the queue afterwards: an `again` rating re-inserts the card ~4 positions later, so the queue shrinks non-monotonically.
 
-**Persistence — `src/lib/storage.ts`.** Keys are `a1fc_card_states`, `a1fc_settings`, `a1fc_deck_cache`. `loadSettings` spreads over `DEFAULT_SETTINGS`, so adding a new setting is backwards-compatible with existing users — add the field to `Settings` in `src/types.ts` *and* to `DEFAULT_SETTINGS`.
+**Persistence — `src/lib/storage.ts`.** Keys are `a1fc_card_states`, `a1fc_settings`, `a1fc_deck_cache`. `loadSettings` spreads over `DEFAULT_SETTINGS`, so adding a new setting is backwards-compatible with existing users — add the field to `Settings` in `src/types.ts` _and_ to `DEFAULT_SETTINGS`.
 
-**Theme — `src/lib/theme.ts` + Tailwind `darkMode: 'class'`.** `applyTheme` is called once in `src/main.tsx` *before* React mounts to avoid a flash of the wrong scheme; `App.tsx` re-applies on change and subscribes to the system media query while the preference is `system`. Every new UI element needs explicit `dark:` variants — there are no semantic color tokens, screens use raw `slate-*` / `indigo-*` classes directly.
+**Theme — `src/lib/theme.ts` + Tailwind `darkMode: 'class'`.** `applyTheme` is called once in `src/main.tsx` _before_ React mounts to avoid a flash of the wrong scheme; `App.tsx` re-applies on change and subscribes to the system media query while the preference is `system`. Every new UI element needs explicit `dark:` variants — there are no semantic color tokens, screens use raw `slate-*` / `indigo-*` classes directly.
 
 **Verbs — `src/data/verbs.ts`.** A hand-maintained array of present-tense conjugations, independent of the fetched deck. `verbs.test.ts` enforces shape invariants (all six pronoun forms present, valid category, unique infinitives, non-empty example), so adding a verb means matching that structure exactly.
 

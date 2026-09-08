@@ -25,8 +25,10 @@ const BADGE_BASE =
 
 const STATUS_STYLES: Record<CardState['status'], string> = {
   new: 'border-slate-300 text-slate-500 dark:border-slate-600 dark:text-slate-400',
-  learning: 'border-orange-200 bg-orange-50 text-orange-600 dark:border-orange-800 dark:bg-transparent dark:text-orange-300',
-  review: 'border-green-200 bg-green-50 text-green-600 dark:border-green-800 dark:bg-transparent dark:text-green-400',
+  learning:
+    'border-orange-200 bg-orange-50 text-orange-600 dark:border-orange-800 dark:bg-transparent dark:text-orange-300',
+  review:
+    'border-green-200 bg-green-50 text-green-600 dark:border-green-800 dark:bg-transparent dark:text-green-400',
 }
 
 const STATUS_LABELS: Record<CardState['status'], string> = {
@@ -36,7 +38,8 @@ const STATUS_LABELS: Record<CardState['status'], string> = {
 }
 
 const RATING_STYLES: Record<Rating, string> = {
-  again: 'border-red-200 bg-red-50 text-red-600 dark:border-red-800 dark:bg-transparent dark:text-red-400',
+  again:
+    'border-red-200 bg-red-50 text-red-600 dark:border-red-800 dark:bg-transparent dark:text-red-400',
   hard: 'border-orange-200 bg-orange-50 text-orange-600 dark:border-orange-800 dark:bg-transparent dark:text-orange-300',
   good: 'border-green-200 bg-green-50 text-green-600 dark:border-green-800 dark:bg-transparent dark:text-green-400',
   easy: 'border-blue-200 bg-blue-50 text-blue-600 dark:border-blue-800 dark:bg-transparent dark:text-blue-300',
@@ -84,7 +87,9 @@ export function WordsScreen({ cards, cardStates, onBack }: Props) {
           <ArrowLeftIcon className="h-4 w-4" />
         </button>
         <div className="flex-1">
-          <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">Deck</p>
+          <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">
+            Deck
+          </p>
           <h1 className="mt-1.5 text-2xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
             Words
           </h1>
@@ -116,7 +121,9 @@ export function WordsScreen({ cards, cardStates, onBack }: Props) {
       {/* List */}
       {pageItems.length === 0 ? (
         <div className="rounded-card border-2 border-dashed border-slate-200 py-14 text-center dark:border-slate-700">
-          <p className="text-xs font-semibold tracking-widest uppercase text-slate-400 dark:text-slate-500">Nothing here</p>
+          <p className="text-xs font-semibold tracking-widest uppercase text-slate-400 dark:text-slate-500">
+            Nothing here
+          </p>
           <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
             No cards carry this status yet.
           </p>

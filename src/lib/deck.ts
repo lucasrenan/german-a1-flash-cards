@@ -2,8 +2,7 @@ import type { Card } from '../types'
 
 const DECK_URL =
   'https://cdn.jsdelivr.net/gh/patsytau/anki_german_a1_vocab@main/Goethe%20Institute%20A1%20Wordlist.txt'
-const AUDIO_BASE =
-  'https://cdn.jsdelivr.net/gh/patsytau/anki_german_a1_vocab@main/audio'
+const AUDIO_BASE = 'https://cdn.jsdelivr.net/gh/patsytau/anki_german_a1_vocab@main/audio'
 const CACHE_KEY = 'a1fc_deck_cache'
 
 function parseTSV(text: string): Card[] {

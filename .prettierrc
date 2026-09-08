@@ -1,0 +1,22 @@
+{
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "printWidth": 100,
+  "overrides": [
+    {
+      "comment": "Hand-maintained data table: keep one conjugation object per line.",
+      "files": "src/data/verbs.ts",
+      "options": {
+        "printWidth": 140
+      }
+    },
+    {
+      "comment": "Keep one <meta> per line so index.html and verbs/index.html stay easy to diff.",
+      "files": "*.html",
+      "options": {
+        "printWidth": 160
+      }
+    }
+  ]
+}

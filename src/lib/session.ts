@@ -62,7 +62,10 @@ export function buildQueue(
 
     case 'all':
     default: {
-      const reviews = shuffle([...dueReview, ...dueLearning]).slice(0, settings.maxReviewsPerSession)
+      const reviews = shuffle([...dueReview, ...dueLearning]).slice(
+        0,
+        settings.maxReviewsPerSession,
+      )
       const fresh = orderedNew.slice(0, settings.newCardsPerSession)
       return interleave(reviews, fresh)
     }

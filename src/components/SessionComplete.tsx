@@ -28,7 +28,9 @@ export function SessionComplete({ stats, onHome, onStudyAgain }: Props) {
   return (
     <div className="flex flex-col gap-8 py-10">
       <div>
-        <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">Session complete</p>
+        <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">
+          Session complete
+        </p>
         <h2 className="mt-3 text-4xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
           {de}
         </h2>

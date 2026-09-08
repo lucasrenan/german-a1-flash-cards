@@ -117,11 +117,7 @@ describe('buildQueue', () => {
   })
 
   it('filter=all interleaves a new card every 5 reviews', () => {
-    const cards = [
-      ...Array.from({ length: 10 }, (_, i) => card(`r${i}`)),
-      card('n0'),
-      card('n1'),
-    ]
+    const cards = [...Array.from({ length: 10 }, (_, i) => card(`r${i}`)), card('n0'), card('n1')]
     const states: Record<string, CardState> = {}
     for (let i = 0; i < 10; i++) {
       states[`r${i}`] = state(`r${i}`, { status: 'review', dueDate: midnightPlusDays(0) })
@@ -142,10 +138,7 @@ describe('buildQueue', () => {
   })
 
   it('filter=all caps reviews by maxReviewsPerSession and still emits new cards', () => {
-    const cards = [
-      ...Array.from({ length: 10 }, (_, i) => card(`r${i}`)),
-      card('n0'),
-    ]
+    const cards = [...Array.from({ length: 10 }, (_, i) => card(`r${i}`)), card('n0')]
     const states: Record<string, CardState> = {}
     for (let i = 0; i < 10; i++) {
       states[`r${i}`] = state(`r${i}`, { status: 'review', dueDate: midnightPlusDays(0) })

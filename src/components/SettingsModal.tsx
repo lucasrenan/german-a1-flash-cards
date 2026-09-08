@@ -18,7 +18,8 @@ const THEME_OPTIONS: { value: ThemePreference; label: string; icon: ReactNode }[
 const FIELD_CLASS =
   'rounded-card border-2 border-slate-200 bg-white px-3 py-2.5 text-slate-800 transition-colors hover:border-slate-300 focus:border-indigo-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:hover:border-slate-600 dark:focus:border-indigo-500'
 
-const LABEL_CLASS = 'text-xs font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400'
+const LABEL_CLASS =
+  'text-xs font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400'
 
 export function SettingsModal({ settings, onSave, onThemeChange, onClose }: Props) {
   const [form, setForm] = useState<Settings>(settings)
@@ -39,7 +40,9 @@ export function SettingsModal({ settings, onSave, onThemeChange, onClose }: Prop
       <div className="max-h-[90vh] w-full max-w-sm overflow-y-auto rounded-card border-2 border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-800">
         <div className="mb-7 flex items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">Preferences</p>
+            <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">
+              Preferences
+            </p>
             <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
               Settings
             </h2>
@@ -87,7 +90,9 @@ export function SettingsModal({ settings, onSave, onThemeChange, onClose }: Prop
               min={1}
               max={200}
               value={form.newCardsPerSession}
-              onChange={(e) => setForm((f) => ({ ...f, newCardsPerSession: Number(e.target.value) }))}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, newCardsPerSession: Number(e.target.value) }))
+              }
               className={FIELD_CLASS}
             />
           </label>
@@ -99,7 +104,9 @@ export function SettingsModal({ settings, onSave, onThemeChange, onClose }: Prop
               min={1}
               max={500}
               value={form.maxReviewsPerSession}
-              onChange={(e) => setForm((f) => ({ ...f, maxReviewsPerSession: Number(e.target.value) }))}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, maxReviewsPerSession: Number(e.target.value) }))
+              }
               className={FIELD_CLASS}
             />
           </label>
@@ -114,7 +121,9 @@ export function SettingsModal({ settings, onSave, onThemeChange, onClose }: Prop
             <span className={LABEL_CLASS}>Audio playback speed</span>
             <select
               value={form.audioPlaybackRate}
-              onChange={(e) => setForm((f) => ({ ...f, audioPlaybackRate: Number(e.target.value) }))}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, audioPlaybackRate: Number(e.target.value) }))
+              }
               className={FIELD_CLASS}
             >
               <option value={0.5}>0.5× (very slow)</option>
@@ -134,7 +143,9 @@ export function SettingsModal({ settings, onSave, onThemeChange, onClose }: Prop
           <Toggle
             label="Show examples by default"
             checked={form.showExamplesByDefault}
-            onChange={() => setForm((f) => ({ ...f, showExamplesByDefault: !f.showExamplesByDefault }))}
+            onChange={() =>
+              setForm((f) => ({ ...f, showExamplesByDefault: !f.showExamplesByDefault }))
+            }
           />
 
           <button
@@ -174,9 +185,7 @@ function Toggle({
       >
         <span
           className={`absolute left-0.5 top-0.5 h-5 w-5 rounded-full transition-transform ${
-            checked
-              ? 'translate-x-5 bg-white'
-              : 'bg-slate-300 dark:bg-slate-500'
+            checked ? 'translate-x-5 bg-white' : 'bg-slate-300 dark:bg-slate-500'
           }`}
         />
       </button>

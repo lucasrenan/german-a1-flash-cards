@@ -20,7 +20,11 @@ function stubMatchMedia(prefersDark: boolean) {
     vi.fn(() => mql),
   )
   // jsdom puts matchMedia on window — stub there too.
-  Object.defineProperty(window, 'matchMedia', { configurable: true, writable: true, value: () => mql })
+  Object.defineProperty(window, 'matchMedia', {
+    configurable: true,
+    writable: true,
+    value: () => mql,
+  })
   return mql
 }
 

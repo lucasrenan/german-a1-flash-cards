@@ -59,7 +59,13 @@ describe('isDue', () => {
 
 describe('reviewCard - again', () => {
   it('resets repetitions, schedules tomorrow, increments lapses, drops ease', () => {
-    const initial = makeState({ repetitions: 4, interval: 30, easeFactor: 2.5, lapses: 1, status: 'review' })
+    const initial = makeState({
+      repetitions: 4,
+      interval: 30,
+      easeFactor: 2.5,
+      lapses: 1,
+      status: 'review',
+    })
     const next = reviewCard(initial, 'again')
 
     expect(next.repetitions).toBe(0)
@@ -89,8 +95,12 @@ describe('reviewCard - hard', () => {
   })
 
   it('stays in learning until two successful repetitions, then becomes review', () => {
-    expect(reviewCard(makeState({ repetitions: 1, status: 'learning' }), 'hard').status).toBe('learning')
-    expect(reviewCard(makeState({ repetitions: 2, status: 'learning' }), 'hard').status).toBe('review')
+    expect(reviewCard(makeState({ repetitions: 1, status: 'learning' }), 'hard').status).toBe(
+      'learning',
+    )
+    expect(reviewCard(makeState({ repetitions: 2, status: 'learning' }), 'hard').status).toBe(
+      'review',
+    )
   })
 })
 

@@ -26,6 +26,7 @@ export function FlashCard({
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reset per-card UI state when the card changes
     setShowFrontExample(showExamplesByDefault)
     setShowBackExample(showExamplesByDefault)
     setIsPlaying(false)
@@ -96,7 +97,9 @@ export function FlashCard({
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">Deutsch</p>
+                  <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">
+                    Deutsch
+                  </p>
                   <p className="mt-3 break-words text-4xl tracking-tight font-bold text-slate-800 dark:text-slate-100">
                     {card.deWord}
                   </p>
@@ -134,7 +137,9 @@ export function FlashCard({
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs font-semibold tracking-widest uppercase text-slate-400 dark:text-slate-500">Deutsch</p>
+                  <p className="text-xs font-semibold tracking-widest uppercase text-slate-400 dark:text-slate-500">
+                    Deutsch
+                  </p>
                   <p className="mt-1.5 break-words text-xl font-bold text-slate-500 dark:text-slate-400">
                     {card.deWord}
                   </p>
@@ -150,7 +155,9 @@ export function FlashCard({
               <div aria-hidden="true" className="my-5 h-px bg-slate-200 dark:bg-slate-700" />
 
               <div>
-                <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">English</p>
+                <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">
+                  English
+                </p>
                 <p className="mt-2 break-words text-4xl tracking-tight font-bold text-slate-800 dark:text-slate-100">
                   {card.enWord}
                 </p>
@@ -173,10 +180,14 @@ export function FlashCard({
                   {showBackExample && (
                     <div className="mt-2 space-y-1">
                       {card.deSentence && (
-                        <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400">{card.deSentence}</p>
+                        <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+                          {card.deSentence}
+                        </p>
                       )}
                       {card.enSentence && (
-                        <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">{card.enSentence}</p>
+                        <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                          {card.enSentence}
+                        </p>
                       )}
                     </div>
                   )}

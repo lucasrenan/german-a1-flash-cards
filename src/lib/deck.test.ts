@@ -33,7 +33,8 @@ describe('loadDeck', () => {
         enWord: 'house',
         enSentence: 'The house is big.',
         enNote: 'neuter noun',
-        audioUrl: 'https://cdn.jsdelivr.net/gh/patsytau/anki_german_a1_vocab@main/audio/tts-001.mp3',
+        audioUrl:
+          'https://cdn.jsdelivr.net/gh/patsytau/anki_german_a1_vocab@main/audio/tts-001.mp3',
       },
     ])
   })
@@ -62,13 +63,33 @@ describe('loadDeck', () => {
   it('returns cached deck without re-fetching', async () => {
     localStorage.setItem(
       CACHE_KEY,
-      JSON.stringify([{ id: 'cached', deWord: 'x', deSentence: '', enWord: '', enSentence: '', enNote: '', audioUrl: '' }]),
+      JSON.stringify([
+        {
+          id: 'cached',
+          deWord: 'x',
+          deSentence: '',
+          enWord: '',
+          enSentence: '',
+          enNote: '',
+          audioUrl: '',
+        },
+      ]),
     )
     const fetchMock = vi.fn()
     vi.stubGlobal('fetch', fetchMock)
     const cards = await loadDeck()
     expect(fetchMock).not.toHaveBeenCalled()
-    expect(cards).toEqual([{ id: 'cached', deWord: 'x', deSentence: '', enWord: '', enSentence: '', enNote: '', audioUrl: '' }])
+    expect(cards).toEqual([
+      {
+        id: 'cached',
+        deWord: 'x',
+        deSentence: '',
+        enWord: '',
+        enSentence: '',
+        enNote: '',
+        audioUrl: '',
+      },
+    ])
   })
 
   it('falls through to fetch when cache is corrupt JSON', async () => {

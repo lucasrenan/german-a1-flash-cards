@@ -8,12 +8,7 @@ import { WordsScreen } from './components/WordsScreen'
 import { loadDeck } from './lib/deck'
 import { buildQueue } from './lib/session'
 import { createInitialState, isDue, reviewCard } from './lib/sm2'
-import {
-  loadCardStates,
-  loadSettings,
-  saveCardStates,
-  saveSettings,
-} from './lib/storage'
+import { loadCardStates, loadSettings, saveCardStates, saveSettings } from './lib/storage'
 import { applyTheme, watchSystemTheme } from './lib/theme'
 import type {
   Card,
@@ -52,9 +47,11 @@ export default function App() {
 
   // Keep a ref to cardStates for saving without stale closure issues
   const cardStatesRef = useRef(cardStates)
+  // eslint-disable-next-line react-hooks/refs -- deliberate latest-value ref, read only from effects/handlers
   cardStatesRef.current = cardStates
 
   const settingsRef = useRef(settings)
+  // eslint-disable-next-line react-hooks/refs -- deliberate latest-value ref, read only from effects/handlers
   settingsRef.current = settings
 
   useEffect(() => {
@@ -131,29 +128,26 @@ export default function App() {
     setView('session')
   }
 
-  const handleRate = useCallback(
-    (cardId: string, rating: Rating) => {
-      const current = cardStatesRef.current[cardId] ?? createInitialState(cardId)
-      const next = reviewCard(current, rating)
+  const handleRate = useCallback((cardId: string, rating: Rating) => {
+    const current = cardStatesRef.current[cardId] ?? createInitialState(cardId)
+    const next = reviewCard(current, rating)
 
-      const updated = { ...cardStatesRef.current, [cardId]: next }
-      setCardStates(updated)
-      saveCardStates(updated)
+    const updated = { ...cardStatesRef.current, [cardId]: next }
+    setCardStates(updated)
+    saveCardStates(updated)
 
-      setStats((s) => ({ ...s, total: s.total + 1, [rating]: s[rating] + 1 }))
+    setStats((s) => ({ ...s, total: s.total + 1, [rating]: s[rating] + 1 }))
 
-      setQueue((q) => {
-        const rest = q.slice(1)
-        if (rating === 'again') {
-          // re-insert near end (but not after 5+ cards)
-          const insertAt = Math.min(rest.length, 4)
-          return [...rest.slice(0, insertAt), cardId, ...rest.slice(insertAt)]
-        }
-        return rest
-      })
-    },
-    [],
-  )
+    setQueue((q) => {
+      const rest = q.slice(1)
+      if (rating === 'again') {
+        // re-insert near end (but not after 5+ cards)
+        const insertAt = Math.min(rest.length, 4)
+        return [...rest.slice(0, insertAt), cardId, ...rest.slice(insertAt)]
+      }
+      return rest
+    })
+  }, [])
 
   function handleExit() {
     setView(stats.total > 0 ? 'complete' : 'home')
@@ -161,6 +155,7 @@ export default function App() {
 
   useEffect(() => {
     if (view === 'session' && queue.length === 0 && stats.total > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- session-complete transition when the queue drains
       setView('complete')
     }
   }, [queue, view, stats.total])
@@ -180,7 +175,9 @@ export default function App() {
     return (
       <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
         <div className="mx-auto flex min-h-screen max-w-lg flex-col justify-center px-4">
-          <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">Deutsch — Goethe A1</p>
+          <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">
+            Deutsch — Goethe A1
+          </p>
           <h1 className="mt-3 text-4xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
             Flash cards
           </h1>
@@ -197,12 +194,16 @@ export default function App() {
     return (
       <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
         <div className="mx-auto flex min-h-screen max-w-lg flex-col justify-center px-4">
-          <p className="text-xs font-semibold tracking-widest uppercase text-red-600 dark:text-red-400">Deck unavailable</p>
+          <p className="text-xs font-semibold tracking-widest uppercase text-red-600 dark:text-red-400">
+            Deck unavailable
+          </p>
           <h1 className="mt-3 text-3xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
             The deck didn't load.
           </h1>
           <div className="mt-6 rounded-card border-2 border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-transparent">
-            <p className="text-xs font-semibold tracking-widest uppercase text-red-600 dark:text-red-400">What happened</p>
+            <p className="text-xs font-semibold tracking-widest uppercase text-red-600 dark:text-red-400">
+              What happened
+            </p>
             <p className="mt-2 break-words text-sm text-slate-800 dark:text-slate-100">{error}</p>
           </div>
           <p className="mt-6 text-sm text-slate-500 dark:text-slate-400">
@@ -230,11 +231,7 @@ export default function App() {
         )}
 
         {view === 'words' && (
-          <WordsScreen
-            cards={cards}
-            cardStates={cardStates}
-            onBack={() => setView('home')}
-          />
+          <WordsScreen cards={cards} cardStates={cardStates} onBack={() => setView('home')} />
         )}
 
         {view === 'verbs' && <VerbsScreen onBack={() => navigate('home')} />}

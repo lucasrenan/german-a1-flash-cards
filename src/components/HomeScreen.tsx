@@ -44,7 +44,11 @@ export function HomeScreen({
   const stats = [
     { label: 'New', value: summary.newCount, color: 'text-indigo-600 dark:text-indigo-400' },
     { label: 'Due', value: summary.dueCount, color: 'text-orange-500 dark:text-orange-400' },
-    { label: 'Learning', value: summary.learningCount, color: 'text-green-600 dark:text-green-400' },
+    {
+      label: 'Learning',
+      value: summary.learningCount,
+      color: 'text-green-600 dark:text-green-400',
+    },
   ]
 
   return (
@@ -52,7 +56,9 @@ export function HomeScreen({
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">Deutsch — Goethe A1</p>
+          <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">
+            Deutsch — Goethe A1
+          </p>
           <h1 className="mt-2 text-4xl font-bold tracking-tight text-slate-800 dark:text-slate-100">
             Flash cards
           </h1>
@@ -74,14 +80,18 @@ export function HomeScreen({
             className="rounded-card border-2 border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800"
           >
             <p className={`text-3xl font-bold tracking-tight ${color}`}>{value}</p>
-            <p className="mt-1.5 text-xs font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400">{label}</p>
+            <p className="mt-1.5 text-xs font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400">
+              {label}
+            </p>
           </div>
         ))}
       </div>
 
       {/* Filter tabs */}
       <div>
-        <p className="mb-3 text-xs font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400">What to study</p>
+        <p className="mb-3 text-xs font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400">
+          What to study
+        </p>
         <div className="grid grid-cols-4 gap-2">
           {FILTERS.map(({ mode, label, key }) => {
             const count = key ? summary[key] : null
