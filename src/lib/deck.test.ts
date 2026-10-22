@@ -1,7 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { clearDeckCache, loadDeck } from './deck'
 
-const CACHE_KEY = 'a1fc_deck_cache'
+const CACHE_KEY = 'a1fc_deck_cache_v2'
+const LEGACY_CACHE_KEY = 'a1fc_deck_cache'
 
 beforeEach(() => {
   localStorage.clear()
@@ -33,8 +34,7 @@ describe('loadDeck', () => {
         enWord: 'house',
         enSentence: 'The house is big.',
         enNote: 'neuter noun',
-        audioUrl:
-          'https://cdn.jsdelivr.net/gh/patsytau/anki_german_a1_vocab@main/audio/tts-001.mp3',
+        audioUrl: '/deck/audio/tts-001.mp3',
       },
     ])
   })
@@ -87,9 +87,18 @@ describe('loadDeck', () => {
         enWord: '',
         enSentence: '',
         enNote: '',
-        audioUrl: '',
+        audioUrl: '/deck/audio/tts-cached.mp3',
       },
     ])
+  })
+
+  it('drops the legacy v1 cache and re-fetches', async () => {
+    localStorage.setItem(LEGACY_CACHE_KEY, '[]')
+    const fetchMock = mockFetchText('001\tHaus\t\t\t\t\n')
+    const cards = await loadDeck()
+    expect(fetchMock).toHaveBeenCalledWith('/deck/wordlist.tsv')
+    expect(cards).toHaveLength(1)
+    expect(localStorage.getItem(LEGACY_CACHE_KEY)).toBeNull()
   })
 
   it('falls through to fetch when cache is corrupt JSON', async () => {

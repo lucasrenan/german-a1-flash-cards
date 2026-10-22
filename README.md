@@ -30,7 +30,7 @@ It was **vibe-coded with Claude Code**: I described what I wanted, made design d
 - [React 18](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
 - [Vite](https://vitejs.dev/) — dev server and bundler
 - [Tailwind CSS](https://tailwindcss.com/) — styling
-- Card data and audio are streamed from [jsDelivr CDN](https://www.jsdelivr.com/) (Anki deck repo on GitHub)
+- Card data and audio are vendored into [`public/deck/`](public/deck/) from the upstream Anki deck repo on Codeberg
 
 No backend. No tracking. Everything runs in the browser.
 
@@ -110,7 +110,8 @@ blocks the deploy.
 
 ## How It Works
 
-- **First load**: the app fetches the tab-separated wordlist from [jsDelivr](https://cdn.jsdelivr.net/) (mirroring the Anki deck repo) and caches it in localStorage. Audio files are streamed on demand from the same CDN.
+- **First load**: the app fetches the tab-separated wordlist from `/deck/wordlist.tsv` (served from this site) and caches it in localStorage. Audio files are loaded on demand from `/deck/audio/`.
+- **Updating the deck**: run `./scripts/sync-deck.sh` to re-copy the wordlist and audio from [upstream](https://codeberg.org/patrizia/anki_german_a1_vocab), then commit the diff. The upstream commit is recorded in `public/deck/SOURCE.md`.
 - **SM-2 algorithm** in [`src/lib/sm2.ts`](src/lib/sm2.ts) updates each card's ease factor, interval, and due date after every rating.
 - **Session queue** in [`src/lib/session.ts`](src/lib/session.ts) prioritises due reviews and interleaves new cards (every ~5 reviews).
 - **Card states and settings** are persisted in localStorage under the `a1fc_*` keys.
@@ -123,12 +124,12 @@ To reset all progress, clear your browser's localStorage for the site.
 - **Streak / daily goal counter** on the home screen to drive study consistency.
 - **Stats/progress view** — cards mastered vs. learning vs. new, review forecast for the next N days (data already tracked per card).
 - **Offline support (PWA)** — add a manifest + service worker (`vite-plugin-pwa`) with cache-first strategy for the deck TSV and audio, so the app works with no/patchy connection (e.g. on the commute).
-- **Deck cache versioning/TTL** — cache key never expires or checks for upstream updates. Add a version suffix or periodic re-fetch instead of relying on manual `clearDeckCache()`.
+- **Deck cache invalidation** — the cache key is versioned (`a1fc_deck_cache_v2`) but must be bumped by hand when `public/deck/wordlist.tsv` changes. Deriving it from a content hash at build time would make that automatic.
 - **"Cram before exam" mode** — study a manually chosen subset or historically-hard cards, bypassing SM-2 scheduling.
 
 ## Credits
 
-- **Vocabulary list**: [Anki German A1 Vocab](https://github.com/patsytau/anki_german_a1_vocab) by **patsytau** — based on the Goethe-Institut A1 wordlist (GOETHE-ZERTIFIKAT A1 - START DEUTSCH 1 - WORTLISTE).
+- **Vocabulary list**: [Anki German A1 Vocab](https://codeberg.org/patrizia/anki_german_a1_vocab) by **patrizia** — based on the Goethe-Institut A1 wordlist (GOETHE-ZERTIFIKAT A1 - START DEUTSCH 1 - WORTLISTE).
 - **Audio**: machine-generated using [Thorsten-Voice](https://github.com/thorstenMueller/Thorsten-Voice) by **Thorsten Müller** — a high-quality, free, offline German TTS voice.
 
 Huge thanks to both authors for making these resources freely available.
@@ -137,4 +138,4 @@ Huge thanks to both authors for making these resources freely available.
 
 No license file is included yet — feel free to fork for personal use. If you'd like to use the source code in your own project, open an issue and I'll add a permissive license.
 
-Note that the vocabulary data is **not** bundled in this repo — it's fetched from the upstream Anki deck repository at runtime, and remains under its original CC BY-SA 4.0 license.
+The vocabulary and audio in [`public/deck/`](public/deck/) are copied from the upstream Anki deck repository and remain under its original [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license (see [`public/deck/LICENCE.md`](public/deck/LICENCE.md)). That license applies to the deck data only, not to the app source.

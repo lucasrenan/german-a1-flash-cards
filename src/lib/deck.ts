@@ -1,9 +1,15 @@
 import type { Card } from '../types'
 
-const DECK_URL =
-  'https://cdn.jsdelivr.net/gh/patsytau/anki_german_a1_vocab@main/Goethe%20Institute%20A1%20Wordlist.txt'
-const AUDIO_BASE = 'https://cdn.jsdelivr.net/gh/patsytau/anki_german_a1_vocab@main/audio'
-const CACHE_KEY = 'a1fc_deck_cache'
+// Vendored from codeberg.org/patrizia/anki_german_a1_vocab by scripts/sync-deck.sh
+const DECK_URL = '/deck/wordlist.tsv'
+const AUDIO_BASE = '/deck/audio'
+const CACHE_KEY = 'a1fc_deck_cache_v2'
+// v1 cached absolute jsDelivr audio URLs that no longer resolve
+const LEGACY_CACHE_KEY = 'a1fc_deck_cache'
+
+function audioUrlFor(id: string): string {
+  return `${AUDIO_BASE}/tts-${id}.mp3`
+}
 
 function parseTSV(text: string): Card[] {
   return text
@@ -19,17 +25,23 @@ function parseTSV(text: string): Card[] {
         enWord: cols[3]?.trim() ?? '',
         enSentence: cols[4]?.trim() ?? '',
         enNote: cols[5]?.trim() ?? '',
-        audioUrl: `${AUDIO_BASE}/tts-${id}.mp3`,
+        audioUrl: audioUrlFor(id),
       }
     })
     .filter((card) => card.id && card.deWord)
 }
 
 export async function loadDeck(): Promise<Card[]> {
+  localStorage.removeItem(LEGACY_CACHE_KEY)
+
   const cached = localStorage.getItem(CACHE_KEY)
   if (cached) {
     try {
-      return JSON.parse(cached) as Card[]
+      // Re-derive audioUrl so a future change of AUDIO_BASE doesn't strand cached decks
+      return (JSON.parse(cached) as Card[]).map((card) => ({
+        ...card,
+        audioUrl: audioUrlFor(card.id),
+      }))
     } catch {
       // fall through to re-fetch
     }
